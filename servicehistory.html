@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRGPL | Service History</title>
+    <link rel="stylesheet" href="table.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+    <link rel="icon" href="logo.png" sizes = 32x32 type="image/icon type">
+     
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.css"/>
+ 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.js"></script>
+
+    <style>
+        .outputFields{
+            display: block;
+        }
+        .outputFields strong{
+            font-size: larger;
+        }
+
+        #exportData tbody tr td button{
+margin: 0;
+padding: 8px;
+}
+#exportData { border-collapse: collapse; }
+#exportData th, #exportData td { border: solid 0.1px rgb(177, 172, 172); }
+    </style>
+</head>
+<body>
+    
+<!-- TABLE CONTAINER STARTS -->
+<div class="outputFields">
+    <!-- <div class="availableData">
+        <strong>Available Data</strong>
+    </div> -->
+    <div class="get" style="display: none;"></div>
+<!-- CUSTOMER TABLE ENDS -->
+    <table id="exportData">          
+    </table>
+<!-- CUSTOMER TABLE ENDS -->
+<!-- EXPORT TO EXCEL BUTTON STARTS -->
+    <!-- <div class="exportbtn btn">
+        <button style="width: 100px;" onclick="ExportToExcel('xlsx')">EXPORT</button>
+    </div> -->
+<!-- EXPORT TO EXCEL BUTTON ENDS -->
+</div>
+
+<!-- TABLE CONTAINER ENDS -->
+
+
+    <script>
+        document.querySelector('.get').innerHTML = localStorage.getItem('dataID');
+        window.onbeforeunload = function() {
+        localStorage.removeItem('dataID');
+        return '';
+    };
+
+    window.onload = () =>{
+  var email = localStorage.getItem("srgpl");
+  if(email==null){
+   window.location.href="login.php";
+  }
+}
+   
+
+    $(document).ready(function(){
+         var id = localStorage.getItem('dataID');
+        $.ajax({
+            url : "servicehistory.php",
+            method : "POST",
+            data : {id:id},
+            success : function(data){
+                $("#exportData").html(data);
+                $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+            }
+        })
+    })
+
+    
+
+    function ExportToExcel(type, fn, dl) {
+    var elt = document.getElementById('exportData');
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ?
+      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+      XLSX.writeFile(wb, fn || ('servicehistory.' + (type || 'xlsx')));
+}
+    </script>
+</body>
+</html>

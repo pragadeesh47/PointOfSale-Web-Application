@@ -1,0 +1,123 @@
+.outputFields{
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    /* max-height: 800px;
+    overflow: auto; */
+    display: none;
+}
+.dt-buttons .buttons-page-length{
+    width: 150px;
+  }
+#exportData_filter label {
+    display: flex;
+    align-items: center;
+  
+  }
+  
+  #exportData_filter label input {
+    height: 35px;
+  }
+
+  .dt-buttons{
+    display: flex;
+    flex-direction: row;
+}
+.dt-buttons button{
+    width: 80px;
+}
+
+/* .show{
+    display: flex;
+    flex-direction: column;
+}
+.availableData, .total{
+    margin: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+table{
+    margin: auto;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+table th tr {
+    background-color: dodgerblue;
+    color: #ffffff;
+    text-align: left;
+}
+table th,
+table td {
+    padding: 12px 15px;
+}
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+} */
+.exportbtn{
+    text-align: center;
+}   
+.exportbtn button{
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+#exportData {
+    border-collapse: collapse;
+    /* margin: 25px 0; */
+    margin: 25px auto;
+    font-size: 0.9em;
+    font-family: Arial, Helvetica, sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+#exportData thead tr {
+    background-color: #1e90ff;
+    color: #ffffff;
+    text-align: left;
+}
+
+#exportData thead th {
+    padding: 12px 15px;
+    overflow-wrap: break-word;
+    font-weight: bold;
+}
+#exportData tbody td{
+    overflow-wrap: break-word;
+
+}
+
+#exportData tbody tr {
+    border-bottom: 1px solid #dddddd;
+    text-align: left;
+}
+
+#exportData tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+
+
+#exportData tbody tr:hover{
+    cursor:pointer;
+    background-color:gray;
+}
+
+

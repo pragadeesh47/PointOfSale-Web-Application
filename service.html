@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRGPL | Service</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="service.css">
+    <link rel="stylesheet" href="logout.css">
+    <link rel="icon" href="logo.png" sizes = 32x32 type="image/icon type">
+
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.css"/>
+ 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.js"></script>
+
+    <style>
+      .outputFields{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            overflow-y: hidden;
+        }
+        body::-webkit-scrollbar{
+          display: none;
+        }
+       
+
+        table{
+            width: 100%;
+        }
+        table tr td button{
+            padding: 8px;
+        }
+        .searchDiv{
+          width: 100%;
+        }
+        .searchDiv form{
+          width: 100%;
+        }
+        .searchDiv form input[type=text]{
+          width: 200px;
+        }
+        .searchDiv form button{
+          width: 50px;
+        }
+        .new-service{
+          text-align: right;
+          display: flex;
+          flex-direction: row;
+        }
+
+        .inputFields{
+                  display: flex;
+                  flex-direction: row;
+                  margin: 10px;
+                  align-items: center;
+                  justify-content: space-between;
+              }
+              .inputFields input{
+                  height: 35px;
+                  outline: 0;
+                  width: 150px;
+                  border-width: 0 0 2px;
+        border-color: blue
+                  
+              }
+              .inputFields select {
+        width: 145px;
+        min-width: 15ch;
+        max-width: 30ch;
+        border: 1px solid var(--select-border);
+        border-radius: 0.25em;
+        padding: 8px;
+        cursor: pointer;
+        line-height: 1.1;
+        background-color: #fff;
+        background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+      }
+     
+      
+          .container {
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+              }
+              .update-modal {
+                background-color: #fefefe;
+                margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+                border: 1px solid #888;
+                width: 30%;
+              }
+              .logout{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     }
+     .logout img{
+      margin-right: 5px;
+     }
+     .logout img{
+  height: 25px;
+  width: 25px;
+}
+.clearfix{
+  display: flex;
+  flex-direction: row;
+}
+.dt-buttons{
+    display: flex;
+    flex-direction: row;
+}
+.dt-buttons button{
+    width: 80px;
+}
+
+#exportData tbody tr td button{
+margin: 0;
+padding: 8px;
+}
+#exportData { border-collapse: collapse; }
+#exportData th, #exportData td { border: solid 0.1px rgb(177, 172, 172); }
+
+img{
+        width:30px;
+      }
+      .del-img{
+        text-align: center;
+      }
+
+      
+#edit-modal{
+    margin: auto;
+    padding: 30px;
+    border: none;
+    width: 25%;
+}
+#edit-modal div{
+  display: flex;
+}
+dialog::backdrop {
+  backdrop-filter: blur(4px);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+    </style>
+</head>
+<body>
+    <header>
+        <p>SRGPL</p>
+        <nav>
+            <ul>
+              <li><a href="recharge.html" class="link">Recharge</a></li>
+              <li><a href="dashboard.html" class="link">Sale</a></li>
+              <li><a href="withdraw.html" class="link">Withdraw</a></li>
+              <li><a href="expense.html" class="link">Expense</a></li>
+              <li><a href="purchase.html" class="link">Purchase</a></li>
+              <li><a href="service.html" class="link">Service</a></li>
+              <li><a href="credits.html" class="link">Credits</a></li>
+              <li><a href="stocks.html" class="link">Stocks</a></li>
+              <li><a href="orders.html" class="link">Orders</a></li>
+              <li><a href="daily.html" class="link">Daily</a></li>
+              <li><a href="customers.html" class="link">Customers</a></li>
+              <li><a href="return.html" class="link">Return</a></li>
+              <li><a href="overview.html" class="link">Overview</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="dashboard-container">
+        <div class="new-service">
+      <input type="text" id="live-search" placeholder="Search.." name="search2" style="height: 40px;">
+            <button style="background-color: dodgerblue; width: 210px;height: 40px;" class="btn" id="myBtn">NEW SERVICE <i class="fa fa-user-plus"></i></button>
+          </div>
+          <div class="filter-class">
+            <form action="" enctype="multipart/form-data" id="service-form-filter">
+              <input type="date" id="fromDate" name="fromDate" placeholder="Enter the item">
+              <input type="date" id="toDate" name="toDate" placeholder="How much">
+              <input type="submit" id="service-filter-btn" value="FILTER">
+            </form>
+          </div> 
+                
+    </section>
+    <div class="searchDiv">
+
+    <form class="example" style="margin:auto;" id="status-form">
+      <!-- <input type="text" id="update-status" placeholder="particular" name="update-status">
+     
+      <button style="background-color: dodgerblue;width: 150px;" id="status-update-btn">STATUS</button> -->
+    </form>
+  </div>
+
+    <!-- <div class="show-button">
+        <button id="show-btn">Show</button>
+        <button id="hide-btn">Hide</button>
+    </div> -->
+    <div class="outputFields">
+      <!-- <div class="availableData">
+          <strong>Available Data</strong>
+      </div> -->
+      <table id="exportData">
+
+      
+        
+      </table>
+      <!-- <div class="exportbtn btn">
+        <button style="width: 100px;" onclick="ExportToExcel('xlsx')">EXPORT</button>
+    </div> -->
+
+  </div>
+ 
+
+<!-- MODAL -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form action="" enctype="multipart/form-data" id="service-form">
+        <input type="text" id="name" name="name" placeholder="Name">
+        <input type="text" id="mobile" name="mobile" placeholder="Mobile">
+        <input type="text" id="complaint" name="complaint" placeholder="Complaint">
+        <input type="text" id="amount" name="amount" placeholder="Advance(optional)">
+        <input type="text" id="place" name="place" placeholder="Place">
+        <input type="submit" id="service-btn"value="SUBMIT">
+      </form>
+    </div>
+  </div>
+
+  <div id="id02" class="logModal">
+    <span onclick="document.getElementById('id02').style.display='none'" class="logClose" title="logClose logModal">×</span>
+    
+      <div class="logContainer">
+
+        <h1>Logout Account</h1>
+        <br>
+        <p>Are you sure you want to logout your account?</p>
+        <br>
+        <br>
+      
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+          <button type="button" onclick="logout()" class="deletebtn">Logout</button>
+
+        </div>
+      </div>
+  </div>
+
+  <div class="logout">
+    <div class="logItem">
+      <a href="profile.html"><img src="profile.png" alt=""></a>
+    </div>
+    <div class="logItem">
+      <img src="shutdown.png" alt="" onclick="document.getElementById('id02').style.display='block'">
+    </div>
+</div>
+
+
+  <div id="id01" class="modal" style="animation:none; padding-top: 0;overflow: hidden;">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+    <form class="modal-content update-modal" action="">
+      <div class="container">
+       <form class="amount-update">
+        <input type="text" name="data-id" id="data-id" style="display: none;">
+        <div class="inputFields">
+            <label for="status-type">Status</label>
+            <select name="status-type" id="status-type">
+                <option value="0">Success</option>
+                <option value="1">Success Delivery</option>
+                <option value="2">Return Delivery</option>
+                <option value="3">Return</option>
+                <option value="4">Remarks</option>
+            </select>
+        </div>
+        <div class="inputFields final-input">
+          <label for="final-amount">Final</label>
+          <input type="text" name="final-amount" id="final-amount">
+      </div> <div class="inputFields balance-input">
+        <label for="balance-amount" id="bal">Balance</label>
+        <input type="text" name="balance-amount" id="balance-amount">
+    </div>    <div class="inputFields remarks-input">
+      <label for="remarks">Remarks</label>
+      <input type="text" name="remarks" id="remarks">
+  </div>    
+     
+        <div class="inputFields">
+            <button type="submit" id="status-submit">SUBMIT </button>
+        </div>  
+       </form>
+        </div>
+      </div>
+    </form>
+  </div>    
+  
+
+  <dialog id="edit-modal">
+    <input type="text" name="edit-id" id="edit-id" placeholder="Enter the ID" >
+  
+    <div>
+      <button id="cancel-btn">CANCEL</button>
+      <button id="delete-btn">DELETE</button>
+    
+    </div>
+    </dialog>
+  <script>
+const dialog = document.getElementById('edit-modal');
+$(window).click(function(){
+    if(event.target==dialog){
+    dialog.close();
+}
+})
+
+
+$("#delete-btn").click(function(){
+  var id = $("#edit-id").val();
+  var which = 1;
+  if(id!=""){
+    $.ajax({
+      url : "delete.php",
+      method : "POST",
+      data : {
+        id : id,
+        which : which
+      },
+      success : function(data){
+    dialog.close();
+        $('#'+id).remove();
+        $("#edit-id").val("");
+      }
+    })
+  }
+})
+$("#cancel-btn").click(function(){
+  dialog.close();
+  
+})
+function logout(){
+  localStorage.clear();
+  location.href='logout.php';
+}
+const statusForm = document.getElementById("status-form");
+statusForm.onsubmit = (e)=>{
+  e.preventDefault();
+}
+
+document.querySelector(".update-modal").onsubmit = (e) =>{
+  e.preventDefault();
+}
+
+var empty="";
+
+
+$(document).ready(function(){
+  $("#service-filter-btn").click(function(){
+    var fromDate = $("#fromDate").val();
+    var toDate = $("#toDate").val();
+    $.ajax({
+      url : "filterservice.php",
+      method : "POST",
+      data : {
+        fromDate : fromDate,
+        toDate : toDate
+      },
+      success : function(data){
+        $("#exportData").html(data);
+        statusBtn();
+        $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                      dialog.showModal();
+                        
+                    })
+                });
+        $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("servicehistory.html","_blank");
+                        })
+                    });
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+                      // $('#exportData').DataTable({
+                      //   dom : 'Bfrtip',
+                      //   buttons : [
+                      //     'copy', 'csv','excel','pdf','print'
+                      //   ]
+                      // });
+      }
+    })
+  })
+})
+
+$(document).ready(function(){
+  $("#service-btn").click(function(){
+    var name = $("#name").val();
+    var amount = $("#amount").val();
+    var place = $("#place").val();
+    var complaint = $("#complaint").val();
+    var mobile = $("#mobile").val();
+    if(name!="" && place!="" && mobile!="" && complaint!=""){
+    $(".modal").css("display","none");
+      $.ajax({
+        url : "service.php",
+        method : "POST",
+        data : {
+          name : name,
+          mobile : mobile,
+          place : place,
+          complaint : complaint,
+          amount : amount
+        },
+        success : function(data){
+          $("#exportData").html(data);
+          statusBtn();
+          $(".final-input").show()
+          $("#name").val(empty);
+          $("#amount").val(empty);
+          $("#place").val(empty);
+          $("#complaint").val(empty);
+          $("#mobile").val(empty);
+          $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                      dialog.showModal();
+                       
+                    })
+                });
+          $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("servicehistory.html","_blank");
+                        })
+                    });
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+                      // $('#exportData').DataTable({
+                      //   dom : 'Bfrtip',
+                      //   buttons : [
+                      //     'copy', 'csv','excel','pdf','print'
+                      //   ]
+                      // });
+
+        }
+      })
+    }
+    else{
+      alert("Required Fields are missing");
+    }
+  })
+})
+
+window.onload = () =>{
+  var email = localStorage.getItem("srgpl");
+  if(email==null){
+   window.location.href="login.php";
+  }
+}
+   
+
+var d = new Date();
+var month = d.getMonth()+1;
+var day = d.getDate();
+    
+var output = d.getFullYear() + '-' +(month<10 ? '0' : '') + month + '-' +(day<10 ? '0' : '') + day;
+document.getElementById("fromDate").value = output;
+document.getElementById("toDate").value = output;
+
+$("#final-amount").keyup(function(){
+  var final = $("#final-amount").val();
+  var id = $("#data-id").val();
+  $.ajax({
+    url : "updatebalance.php",
+    method : "POST",
+    data : {
+      final : final,
+      id : id
+    },
+    success : function(data){
+      $("#balance-amount").val(data);
+    }
+  })
+})
+
+$("select").on('change',function(){
+  var status = this.value;
+  var id = $("#data-id").val();
+  if(this.value==1){
+    $.ajax({
+      url : "delivery.php",
+      method : "POST",
+      data : {
+        id : id,
+        status : status
+      },
+      success : function(data){
+        $("#balance-amount").val(data);
+        $(".final-input").hide();
+        $("#bal").text("Balance");
+        $(".balance-input").show();
+      }
+    })
+  }
+  else if(this.value==2){
+    $.ajax({
+      url : "delivery.php",
+      method : "POST",
+      data : {
+        id : id,
+        status : status
+      },
+      success : function(data){
+        $("#balance-amount").val(data);
+        $(".final-input").hide();
+        $("#bal").text("Advance");
+        $(".balance-input").show();
+
+
+      }
+    })
+  }
+  else if(this.value==3){
+    
+        $(".final-input").hide();
+    $(".balance-input").hide();
+    
+
+  }
+  else if(this.value==4){
+    $(".final-input").hide();
+    $(".balance-input").hide();
+
+
+  }
+  else{
+    $(".final-input").show();
+    $(".balance-input").show();
+    $("#bal").text("Balance");
+
+  }
+})
+
+$(document).ready(function(){
+      $("#status-submit").click(function(){
+        $("#id01").css("display","none");
+        var id = $("#data-id").val();
+        var statusType  = $("#status-type").val();
+        var finalAmount = $("#final-amount").val();
+        var balanceAmount = $("#balance-amount").val();
+        var remarks = $("#remarks").val();
+        if(finalAmount!="" || balanceAmount!="" || remarks!="" || statusType=="3"){
+          $.ajax({
+          url : "serviceupdate.php",
+          method : "POST",
+          data : {
+            id : id,
+            statusType : statusType,
+            balanceAmount : balanceAmount,
+            finalAmount : finalAmount,
+            remarks : remarks
+          },
+          success : function(data){
+            var dataArr = data.split(".")
+
+            // $("#exportData").html(data);
+            // $('tr#'+id+' td.final').text(dataArr[0]);
+            // $('tr#'+id+' td.balance').text(dataArr[1]);
+            // $('tr#'+id+' td.status').text(dataArr[2]);
+            if(Number(dataArr[3])>=0){
+            // $('tr#'+id+' td.advance').text(dataArr[3]);
+            // $('tr#'+id+' td.remarks').text(dataArr[4]);
+            $('tr#'+id+' td.final').text(dataArr[0]);
+            $('tr#'+id+' td.balance').text(dataArr[1]);
+            $('tr#'+id+' td.status').text(dataArr[2]);
+            $('tr#'+id+' td.remarks').text(dataArr[4]);
+            $('tr#'+id+' td.advance').text(dataArr[3]);
+            
+            }
+            else{
+            // $('tr#'+id+' td.remarks').text(dataArr[3]);
+            alert("You are paying greater amount than your advance");
+            }
+            console.log(data);
+            statusBtn();
+            $("#bal").text("Balance");
+            $("select").val('0');
+            $(".final-input").show();
+            $("#final-amount").val("");
+            $("#balance-amount").val("");
+            $("#remarks").val("");
+            $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("servicehistory.html","_blank");
+                        })
+                    });
+                    $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                      dialog.showModal();
+
+                    })
+                });
+
+          }
+        })
+      }
+        
+      })
+    })
+
+
+
+    $(document).ready(function(){
+        $.ajax({
+                        url:"displayservice.php",
+                        method : "POST",
+                        success : function(data){
+                            $("#exportData").html(data);
+                            statusBtn();
+                            $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("servicehistory.html","_blank");
+                        })
+                    });
+                    $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                        dialog.showModal();
+                      
+                    })
+                });
+            $(".final-input").show();
+        $("#bal").text("Balance");
+       
+        $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+                        }
+
+                    })
+    })
+
+    $(document).ready(function(){
+            $("#live-search").keyup(function (){
+                var input = $(this).val();
+                // alert(input);
+                if(input != ""){
+                  console.log("hello");
+                    $.ajax({
+                        url:"liveservice.php",
+                        method : "POST",
+                        data:{input:input},
+                        success : function(data){
+                            $("#exportData").html(data);
+                            statusBtn();
+            $(".final-input").show();
+        $("#bal").text("Balance");
+        $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                        dialog.showModal();
+                      
+                    })
+                });
+        $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("servicehistory.html","_blank");
+                        })
+                        
+                    });
+
+
+                        }
+
+                    })
+                    $(document).on('click', 'td', function(){  
+                $('#live-search').val($(this).attr('data-id')); 
+                if($('#live-search').val() != ""){
+                    $.ajax({
+                        url:"displayservice.php",
+                        method : "POST",
+                        success : function(data){
+                            $("#exportData").html(data);
+                            statusBtn();
+                            $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                        dialog.showModal();
+                      
+                    })
+                });
+            $(".final-input").show();
+        $("#bal").text("Balance");
+        $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("servicehistory.html","_blank");
+                        })
+                    });
+                     
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+                        }
+
+                    })
+           } 
+      });  
+                }
+                else{
+                    $.ajax({
+                        url:"displayservice.php",
+                        method : "POST",
+                        data:{input:input},
+                        success : function(data){
+                            $("#exportData").html(data);
+                            statusBtn();
+                            $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                        dialog.showModal();
+                      
+                    })
+                });
+            $(".final-input").show();
+        $("#bal").text("Balance");
+        $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("servicehistory.html","_blank");
+                        })
+                    });
+                     
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+                        }
+
+                    })
+                }
+            });
+        });
+
+
+
+
+    //     $(document).ready(function(){
+      
+    //   $("#status-update-btn").click(function(){
+    //         var id = $('#live-search').val();
+    //           var status = $('#update-status').val();
+    //           if(id!="" && status!=""){
+    //             $.ajax({
+    //                   url:"serviceupdate.php",
+    //                   method : "POST",
+    //                   data:{id:id,
+    //                   status:status,
+    //                   },
+    //                   success : function(data){
+    //                       $("#exportData").html(data);
+    //                       console.log(data);
+    //                   }
+                      
+
+    //               })
+    //           }
+    //           else{
+    //             alert("Required Fields are missing");
+    //           }
+      
+    //   })
+    // })
+    window.onclick = ()=>{
+      if (event.target == document.getElementById('id01')) {
+            document.getElementById('id01').style.display = "none";
+            
+            // $("select option[value=0]").attr('selected', 'selected');
+            $("select").val('0');
+            $(".final-input").show();
+            $("#final-amount").val("");
+            $("#balance-amount").val("");
+        $("#bal").text("Balance");
+        $("#remarks").val("");
+
+          }
+    }
+
+
+    $(document).ready(function(){
+      $(".close").click(function(){
+        $(".modal").hide();
+        $("select").val('0');
+            $(".final-input").show();
+            $("#final-amount").val("");
+            $("#balance-amount").val("");
+        $("#bal").text("Balance");
+        $("#remarks").val("");
+
+      })
+    })
+    // $(document).ready(function(){
+    //   $("#service-btn").click(function(){
+    //     $(".modal").hide();
+    //   })
+    // })
+
+
+    function statusBtn(){
+    var buttons = document.querySelectorAll(".status-btn");
+    buttons.forEach(btn =>{
+        btn.onclick = () =>{
+            var data_id = btn.dataset.id;
+            document.getElementById("id01").style.display = "block";
+            document.getElementById("data-id").value = data_id;
+        }
+    })
+    
+    }
+
+
+    function ExportToExcel(type, fn, dl) {
+    var elt = document.getElementById('exportData');
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ?
+      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+      XLSX.writeFile(wb, fn || ('service.' + (type || 'xlsx')));
+}
+
+  </script>
+  
+
+    <script src="app.js"></script>
+    <script src="service.js"></script>
+
+</body>
+</html>
