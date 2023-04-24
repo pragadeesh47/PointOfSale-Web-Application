@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRGPL | Overview</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="sale.css">
+    <link rel="stylesheet" href="logout.css">
+    <link rel="icon" href="logo.png" sizes = 32x32 type="image/icon type">
+
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
+    <!-- PIE CHART -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+
+
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.css"/>
+ 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.js"></script>
+
+
+    <style>
+        
+        section{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+        }
+    
+        
+    
+     
+    
+        
+        /* .total{
+            text-align: center;
+            background-color: #272343;
+            color: white;
+            border-radius: 10px;
+            width: 200px;
+            margin: auto;
+            padding: 25px;
+        }
+        .total p{
+            font-weight: bolder;
+            font-size: larger;
+        } */
+    
+       
+        select{
+            width: 200px;
+            padding: 12px 18px;
+        }
+        .tables{
+            display: flex;
+            width: 60%;
+            align-items: center;
+            margin: auto;
+        }
+        .filter-class{
+            position: relative;
+        }
+       
+        .logout{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     }
+     .logout img{
+      margin-right: 5px;
+     }
+     .logout img{
+  height: 25px;
+  width: 25px;
+}
+      
+.accs{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+.accs p{
+    margin-right: 10px;
+}
+.pos{
+    color:green;
+}
+.neg{
+    color: red;
+}
+.todayAccount{
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+hr{
+    padding: 0;
+    margin: 0;
+    border: 1px solid black;
+}
+
+.buttons-page-length{
+    width: 200px;
+}
+
+#exportData tbody tr td button{
+margin: 0;
+padding: 8px;
+}
+
+#exportData { border-collapse: collapse; }
+#exportData th, #exportData td { border: solid 0.1px rgb(177, 172, 172); }
+
+.withdraw{
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.daily{
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <p>SRGPL</p>
+        <nav>
+            <ul>
+                <li><a href="recharge.html" class="link">Recharge</a></li>
+                <li><a href="dashboard.html" class="link">Sale</a></li>
+              <li><a href="withdraw.html" class="link">Withdraw</a></li>
+                <li><a href="expense.html" class="link">Expense</a></li>
+                <li><a href="purchase.html" class="link">Purchase</a></li>
+                <li><a href="service.html" class="link">Service</a></li>
+                <li><a href="credits.html" class="link">Credits</a></li>
+                <li><a href="stocks.html" class="link">Stocks</a></li>
+                <li><a href="orders.html" class="link">Orders</a></li>
+                <li><a href="daily.html" class="link">Daily</a></li>
+                <li><a href="customers.html" class="link">Customers</a></li>
+              <li><a href="return.html" class="link">Return</a></li>
+                <li><a href="overview.html" class="link">Overview</a></li>
+            </ul>
+        </nav>
+    </header>
+   
+    <div class="filter-class" style="width: 50%;margin:20px auto;">
+        <form action="" enctype="multipart/form-data" id="form-filter">
+          <input type="date" id="fromDate" name="fromDate" placeholder="Enter the item">
+          <input type="date" id="toDate" name="toDate" placeholder="How much">
+          <input type="submit" id="filter-btn" value="FILTER">
+        </form>
+      </div>  
+
+
+<section>
+<div>
+    <div class="withdraw">
+        <h3 style="text-align: center;">Withdraw</h3>
+        <div class="accs">
+            <p>Amount</p>
+            <p>&#8377; <span class=" upi-amount"></span></p>
+           </div>
+           <div class="accs">
+            <p>Hand</p>
+            <p>&#8377; <span class="pos com-hand"></span></p>
+           </div><div class="accs">
+            <p>Bank</p>
+            <p>&#8377; <span class="pos com-bank"></span></p>
+           </div>
+    </div>
+</div>   
+<div class="daily">
+    <!-- <h3 style="text-align: center;">Withdraw</h3>
+    <div class="accs">
+        <p>Amount</p>
+        <p>&#8377; <span class=" upi-amount"></span></p>
+       </div>
+       <div class="accs">
+        <p>Hand</p>
+        <p>&#8377; <span class="pos com-hand"></span></p>
+       </div><div class="accs">
+        <p>Bank</p>
+        <p>&#8377; <span class="pos com-bank"></span></p>
+       </div> -->
+</div>
+    <div class="todayAccount">
+        <h3 style="text-align: center;">Today's Account</h3>
+       <div class="accs">
+        <p>Sale</p>
+        <p>&#8377; <span class="pos s"></span></p>
+       </div>
+       <div class="accs">
+        <p>Cash In</p>
+        <p>&#8377; <span class="pos cih">0</span></p>
+       </div>
+       <div class="accs">
+        <p>Expense</p>
+        <p>&#8377; <span class="neg e"></span></p>
+       </div>
+       <div class="accs">
+        <p>Service</p>
+        <p>&#8377; <span class="pos ser"></span></p>
+       </div>  <div class="accs">
+        <p>Purchase</p>
+        <p>&#8377; <span class="neg pur"></span></p>
+       </div> <div class="accs">
+        <p>Credits In</p>
+        <p>&#8377; <span class="pos ci"></span></p>
+       </div>
+       <div class="accs">
+        <p>Credits Out</p>
+        <p>&#8377; <span class="neg co"></span></p>
+       </div>
+       <div class="accs">
+        <p>Return</p>
+        <p>&#8377; <span class="neg rt"></span></p>
+       </div> <div class="accs">
+        <p>Recharge</p>
+        <p>&#8377; <span class="pos re"></span></p>
+       </div>
+       <div class="accs">
+        <p>Hand</p>
+        <p>&#8377; <span class="pos hd"></span></p>
+       </div>
+       <hr>
+       <div class="accs totalacc">
+        <p>Total</p>
+        <p>&#8377; <span class="tot"></span></p>
+       </div>
+    </div>
+</section>
+</section> 
+
+<!-- <div class="total">
+    <p>Total</p>
+    <br>
+    <p>$<span class="totalAmount"></span></p>
+</div> -->
+<br>
+<div class="tables">
+    <div class="select-box">
+        <select name="select" id="select">
+            <option value="0">SALE</option>
+            <option value="1">EXPENSE</option>
+            <option value="2">PURCHASE</option>
+            <option value="3">SERVICE</option>
+            <!-- <option value="3">SERVICE</option>
+            <option value="4">CREDITS</option> -->
+        </select>
+    </div>
+    
+    <input type="date" name="fromDate-2" id="fromDate-2">
+    <input type="date" name="toDate-2" id="toDate-2">
+    <input type="submit" id="multi" value="SHOW">
+    <input type="submit" value="HIDE" id="hide">
+</div>
+<div class="outputFields">
+    <!-- <div class="availableData">
+        <strong>Available Data</strong>
+    </div> -->
+    <table id="exportData">
+
+    
+    
+    </table>
+   
+    <!-- <div class="exportbtn btn">
+        <button style="width: 100px;" onclick="ExportToExcel('xlsx')">EXPORT</button>
+    </div> -->
+</div>
+ 
+<div class="logout">
+    <div class="logItem">
+      <a href="profile.html"><img src="profile.png" alt=""></a>
+    </div>
+    <div class="logItem">
+      <img src="shutdown.png" alt="" onclick="document.getElementById('id02').style.display='block'">
+    </div>
+</div>
+  <div id="id02" class="logModal">
+    <span onclick="document.getElementById('id02').style.display='none'" class="logClose" title="logClose logModal">×</span>
+    
+      <div class="logContainer">
+        <h1>Logout Account</h1>
+        <br>
+        <p>Are you sure you want to logout your account?</p>
+        <br>
+        <br>
+      
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+          <button type="button" onclick="logout()" class="deletebtn">Logout</button>
+
+        </div>
+      </div>
+  </div>
+
+<script>
+
+function logout(){
+  localStorage.clear();
+  location.href='logout.php';
+}
+
+    $(document).ready(function(){
+        $.ajax({
+            url : "commission.php",
+            method : "POST",
+            success : function(data){
+                $(".daily").html(data);
+            }
+        })
+    })
+window.onload = () =>{
+  var email = localStorage.getItem("srgpl");
+  if(email==null){
+   window.location.href="login.php";
+  }
+}
+   
+    document.getElementById("form-filter").onsubmit = (e) =>{
+        e.preventDefault();
+    }
+
+    $(document).ready(function(){
+        $.ajax({
+            url : "overview.php",
+            method : "POST",
+            success : function(data){
+                var dataArr = data.split(".");
+                $(".s").text(dataArr[0]);
+                $(".e").text(dataArr[1]);
+                $(".ser").text(dataArr[2]);
+                $(".pur").text(dataArr[3]);
+                $(".ci").text(dataArr[4]);
+                $(".co").text(dataArr[5]);
+                $(".tot").text(Math.abs(dataArr[6]));
+                $(".cih").text(dataArr[7]);
+                $(".rt").text(dataArr[8]);
+                $(".re").text(dataArr[9]);
+                $(".upi-amount").text(dataArr[10]);
+                $(".com-hand").text(dataArr[11]);
+                $(".com-bank").text(dataArr[12]);
+                $(".hd").text(dataArr[11]);
+
+                if(dataArr[6]>0){
+                    $(".tot").addClass("pos");
+                }
+                else if(dataArr[6]<0){
+                    $(".tot").addClass("neg");
+
+                }
+            
+
+
+            }
+        })
+    })
+
+
+
+$(document).ready(function(){
+    $("#multi").click(function(){
+        var status = $("#select").val();
+        var fromDate = $("#fromDate-2").val();
+        var toDate = $("#toDate-2").val();
+        $.ajax({
+            url : "overviewtable.php",
+            method : "POST",
+            data : {
+                status : status,
+                fromDate : fromDate,
+                toDate : toDate
+            },
+            success : function(data){
+                $(".outputFields").show();
+                    $("#exportData").html(data);
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy : true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });           
+                      
+                      $("select").on('change',function(){
+    $('#exportData').DataTable().clear().destroy();
+    $(".outputFields").hide();
+
+
+    });
+            }
+        }) 
+    })
+})
+
+
+
+
+$("#hide").click(function(){
+    $(".outputFields").hide();
+})
+
+
+    $("#filter-btn").click(function(){
+        var fromDate = $("#fromDate").val();
+        var toDate = $("#toDate").val();
+        $.ajax({
+            url : "commission.php",
+            method : "POST",
+            data : {
+                fromDate : fromDate,
+                toDate : toDate
+            },
+            success : function(data){
+                $(".daily").html(data);
+            }
+        })
+        $.ajax({
+            url : "overviewfilter.php",
+            method : "POST",
+            data : {
+                fromDate : fromDate,
+                toDate : toDate
+            },
+            success : function(data){
+                var dataArr = data.split(".");
+                $(".s").text(dataArr[0]);
+                $(".e").text(dataArr[1]);
+                $(".ser").text(dataArr[2]);
+                $(".pur").text(dataArr[3]);
+                $(".ci").text(dataArr[4]);
+                $(".co").text(dataArr[5]);
+                $(".tot").text(Math.abs(dataArr[6]));
+                $(".cih").text(dataArr[7]);
+                $(".rt").text(dataArr[8]);
+                $(".re").text(dataArr[9]);
+                $(".upi-amount").text(dataArr[10]);
+                $(".com-hand").text(dataArr[11]);
+                $(".com-bank").text(dataArr[12]);
+                $(".hd").text(dataArr[11]);
+
+                if(dataArr[6]>0){
+                    $(".tot").addClass("pos");
+                }
+                else if(dataArr[6]<0){
+                    $(".tot").addClass("neg");
+
+
+                }
+  
+
+            }
+        })
+
+    })
+    var d = new Date();
+
+var month = d.getMonth()+1;
+var day = d.getDate();
+
+var output = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + day;
+document.getElementById("fromDate").value = output;
+document.getElementById("toDate").value = output;
+document.getElementById("fromDate-2").value = output;
+document.getElementById("toDate-2").value = output;
+
+
+
+
+</script>
+    <script src="app.js"></script>
+  
+</body>
+</html>

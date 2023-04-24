@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRGPL | Daily</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="credits.css">
+    <link rel="stylesheet" href="logout.css">
+
+    <!-- EXCEL EXPORT LINK -->
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <!-- FONT AWESOME ICONS LINK -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- JQUERY LINK -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <link rel="icon" href="logo.png" sizes = 32x32 type="image/icon type">
+
+
+
+    
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.js"></script>
+    <style>
+          :root {
+        --select-border: #777;
+        --select-focus: blue;
+        --select-arrow: var(--select-border);
+      }
+        .outputFields{
+            display: flex;
+            flex-direction: column;
+        }
+        table{
+            width: 100%;
+        }
+        table tr td button{
+            padding: 8px;
+        }
+        .inputFields{
+                  display: flex;
+                  flex-direction: row;
+                  margin: 10px;
+                  align-items: center;
+                  justify-content: space-between;
+              }
+              .inputFields input{
+                  height: 35px;
+                  outline: 0;
+                  width: 150px;
+                  border-width: 0 0 2px;
+        border-color: blue
+                  
+              }
+              .inputFields select {
+        width: 145px;
+        min-width: 15ch;
+        max-width: 30ch;
+        border: 1px solid var(--select-border);
+        border-radius: 0.25em;
+        padding: 8px;
+        cursor: pointer;
+        line-height: 1.1;
+        background-color: #fff;
+        background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+      }
+     
+      
+     .container {
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+              }
+    .update-modal {
+                background-color: #fefefe;
+                margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+                border: 1px solid #888;
+                width: 30%;
+              }
+              .logout{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     }
+     .logout img{
+      margin-right: 5px;
+     }
+     .logout img{
+  height: 25px;
+  width: 25px;
+}
+.dt-buttons{
+    display: flex;
+    flex-direction: row;
+}
+.dt-buttons button{
+    width: 80px;
+}
+.new-purchase{
+    display: flex;
+}
+section{
+    background-color: #f2f2f2;
+
+}
+
+#exportData tbody tr td button{
+margin: 0;
+padding: 8px;
+}
+#exportData { border-collapse: collapse; }
+#exportData th, #exportData td { border: solid 0.1px rgb(177, 172, 172); }
+
+
+
+      </style>
+</head>
+<body onload="onL()">
+    <!-- HEADER SECTION STARTS -->
+    <header>
+        <p>SRGPL</p>
+        <nav>
+            <ul>
+                <li><a href="recharge.html" class="link">Recharge</a></li>
+                <li><a href="dashboard.html" class="link">Sale</a></li>
+              <li><a href="withdraw.html" class="link">Withdraw</a></li>
+                <li><a href="expense.html" class="link">Expense</a></li>
+                <li><a href="purchase.html" class="link">Purchase</a></li>
+                <li><a href="service.html" class="link">Service</a></li>
+                <li><a href="credits.html" class="link">Credits</a></li>
+                <li><a href="stocks.html" class="link">Stocks</a></li>
+                <li><a href="orders.html" class="link">Orders</a></li>
+                <li><a href="daily.html" class="link">Daily</a></li>
+                <li><a href="customers.html" class="link">Customers</a></li>
+              <li><a href="return.html" class="link">Return</a></li>
+                <li><a href="overview.html" class="link">Overview</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- HEADER SECTION ENDS -->
+
+<!-- LIVE SEARCH SECTION STARTS
+<section class="dashboard-container" style="text-align: center;">
+    <div class="new-purchase" style="width: 35%;margin: auto;">
+  <input type="text" id="item" placeholder="Item" name="item"> -->
+  <!-- <input type="text" id="particular" placeholder="Particular" name="particular"> -->
+        <!-- <button type="submit" style="margin-right: 8px;width: 100px;" class="update-btn" id="item-update-btn">SUBMIT</button> -->
+      <!-- </div>         
+</section> -->
+<!-- LIVE SEARCH SECTION ENDS -->
+
+<!-- TABLE CONTAINER STARTS -->
+    <div class="outputFields">
+        <!-- <div class="availableData">
+            <strong>Available Data</strong>
+        </div> -->
+    <!-- CUSTOMER TABLE ENDS -->
+        <table id="exportData">          
+        </table>
+    <!-- CUSTOMER TABLE ENDS -->
+    <!-- EXPORT TO EXCEL BUTTON STARTS -->
+        <!-- <div class="exportbtn btn">
+            <button style="width: 100px;" onclick="ExportToExcel('xlsx')">EXPORT</button>
+        </div> -->
+    <!-- EXPORT TO EXCEL BUTTON ENDS -->
+    </div>
+
+<!-- TABLE CONTAINER ENDS -->
+
+
+  
+<!-- LOGOUT BUTTON STARTS -->
+  
+<div class="logout">
+    <div class="logItem">
+      <a href="profile.html"><img src="profile.png" alt=""></a>
+    </div>
+    <div class="logItem">
+      <img src="shutdown.png" alt="" onclick="document.getElementById('id02').style.display='block'">
+    </div>
+</div>
+<!-- LOGOUT BUTTON ENDS -->
+
+
+
+
+  <!-- COLLECTION UPDATE STARTS-->
+  <div id="id01" class="modal" style="animation:none; padding-top: 0;overflow: hidden;">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+    <form class="modal-content update-modal" action="">
+      <div class="container">
+       <form class="amount-update">
+        <input type="text" name="data-id" id="data-id" style="display: none;">
+      
+         <div class="inputFields">
+            <label for="remarks-update">Type</label>
+            <select name="status" id="status">
+                <option value="0">Opening</option>
+                <option value="1">Purchase</option>
+                <option value="2">Closing</option>
+            </select>
+        </div>  
+        <div class="inputFields">
+            <label for="amount">Amount</label>
+            <input type="text" name="amount" id="amount" placeholder="Amount">
+        </div>       
+        <div class="inputFields">
+            <button type="submit" id="item-submit">SUBMIT </button>
+        </div>  
+       </form>
+        </div>
+      </div>
+    </form>
+  </div>    
+  <!-- COLLECTION UPDATE ENDS-->
+
+  <div id="id02" class="logModal">
+    <span onclick="document.getElementById('id02').style.display='none'" class="logClose" title="logClose logModal">×</span>
+    
+      <div class="logContainer">
+        <h1>Logout Account</h1>
+        <br>
+        <p>Are you sure you want to logout your account?</p>
+        <br>
+        <br>
+      
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+          <button type="button" onclick="logout()" class="deletebtn">Logout</button>
+
+        </div>
+      </div>
+  </div>
+    
+    <script src="customer.js"></script>
+    <script src="app.js"></script>
+
+    <script type="text/javascript">
+
+function logout(){
+  localStorage.clear();
+  location.href='logout.php';
+}
+
+window.onload = () =>{
+  var email = localStorage.getItem("srgpl");
+  if(email==null){
+   window.location.href="login.php";
+  }
+}
+   
+document.querySelector(".update-modal").onsubmit = (e)=>{
+            e.preventDefault();
+        }
+
+
+function collBtn(){
+    var buttons = document.querySelectorAll(".coll-btn");
+    buttons.forEach(btn =>{
+        btn.onclick = () =>{
+            var data_id = btn.dataset.id;
+            document.getElementById("id01").style.display = "block";
+            document.getElementById("data-id").value = data_id;
+            console.log(data_id);
+        }
+    })
+    
+    }
+    
+        
+// TO HIDE THE BALANCE UPDATE MODAL STARTS...
+        var modal2 = document.getElementById('id01'); 
+        window.onclick = function(event) {
+          if (event.target == modal2) {
+            modal2.style.display = "none";
+          }
+        }
+
+        var d = new Date();
+var month = d.getMonth()+1;
+var day = d.getDate();
+    
+var output = d.getFullYear() + '-' +(month<10 ? '0' : '') + month + '-' +(day<10 ? '0' : '') + day;
+
+
+      
+// TO HIDE THE BALANCE UPDATE MODAL ENDS...
+$(document).ready(function(){
+    var date = output;
+    $.ajax({
+        url : "zero.php",
+        method : "POST",
+        data :{
+            date : date
+        },
+        success : function(data){
+            $.ajax({
+        url : 'dailydisplay.php',
+        method : "POST",
+        success : function(data){
+            $("#exportData").html(data);
+            collBtn();
+            $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("dailyhistory.html","_blank");
+                        })
+                    });
+                 
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+        }
+    })
+        }
+    })
+  
+})
+
+
+$(document).ready(function(){
+    $("#item-submit").click(function(){
+        console.log("Hello");
+        var id = $("#data-id").val();
+        var status  = $("#status").val();
+        var amount  = $("#amount").val();
+            $("#id01").css("display","none");
+            if(amount!=""){
+            $.ajax({
+                url : "dailyupdate.php",
+                method : "POST",
+                data : {
+                    id : id,
+                    amount : amount,
+                    status : status
+                },
+                success : function(data){
+                     var dataArr = data.split(".");
+                    $('tr#'+id+' td.opn').text(dataArr[0]);
+                    $('tr#'+id+' td.prs').text(dataArr[1]);
+                    $('tr#'+id+' td.cls').text(dataArr[2]);
+                    $('tr#'+id+' td.prft').text(dataArr[3]);
+                    $("#amount").val("");
+                }
+            })
+        }
+        
+    })
+})
+
+$(document).ready(function(){
+    $("#item-update-btn").click(function(){
+        var item = $("#item").val();
+        var particular = $("#particular").val();
+        if(item!=""){
+            $.ajax({
+                url : "daily.php",
+                method : "POST",
+                data : {
+                    item : item,
+                    particular : particular
+                },
+                success : function(data){
+                    if(data.length==28){
+                        alert(data);
+                    }
+                    else{
+                        console.log(data);
+
+                    $("#exportData").html(data);
+                    collBtn();
+                    $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("dailyhistory.html","_blank");
+                        })
+                    });
+   
+    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+                }
+                }
+            })
+        }
+    })
+})
+
+       
+   
+$(document).ready(function (){
+    var modal = $("#myModal");
+    $(window).click(function(){
+        if(event.target==modal){
+        modal.css("display", "none");
+    }
+    })
+  
+})
+
+// FUNCTION TO CLOSE THE NEW CUSTOMER MODAL WHEN THE CLOSE ICON IS CLICKED STARTS...
+
+$(document).ready(function (){
+    $(".close").click(function(){
+        $("#myModal").css("display", "none");
+    
+    })
+   
+})
+// FUNCTION TO CLOSE THE NEW CUSTOMER MODAL WHEN THE CLOSE ICON IS CLICKED ENDS...
+// $(window).load(function(){
+//     $.ajax({
+//         url : "zero.php",
+//         method : "POST",
+//         success : function(data){
+//             console.log(data);
+//         }
+//     })
+// })
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRGPL | Orders</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="credits.css">
+    <link rel="stylesheet" href="logout.css">
+    <link rel="icon" href="logo.png" sizes = 32x32 type="image/icon type">
+
+    <!-- EXCEL EXPORT LINK -->
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <!-- FONT AWESOME ICONS LINK -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- JQUERY LINK -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
+
+
+    
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.js"></script>
+    <style>
+          :root {
+        --select-border: #777;
+        --select-focus: blue;
+        --select-arrow: var(--select-border);
+      }
+        .outputFields{
+            display: flex;
+            flex-direction: column;
+        }
+        table{
+            width: 100%;
+        }
+        table tr td button{
+            padding: 8px;
+        }
+        .inputFields{
+                  display: flex;
+                  flex-direction: row;
+                  margin: 10px;
+                  align-items: center;
+                  justify-content: space-between;
+              }
+              .inputFields input{
+                  height: 35px;
+                  outline: 0;
+                  width: 150px;
+                  border-width: 0 0 2px;
+        border-color: blue
+                  
+              }
+              .inputFields select {
+        width: 145px;
+        min-width: 15ch;
+        max-width: 30ch;
+        border: 1px solid var(--select-border);
+        border-radius: 0.25em;
+        padding: 8px;
+        cursor: pointer;
+        line-height: 1.1;
+        background-color: #fff;
+        background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+      }
+     
+      
+     .container {
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+              }
+    .update-modal {
+                background-color: #fefefe;
+                margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+                border: 1px solid #888;
+                width: 30%;
+              }
+              .logout{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     }
+     .logout img{
+      margin-right: 5px;
+     }
+     .logout img{
+  height: 25px;
+  width: 25px;
+}
+.dt-buttons{
+    display: flex;
+    flex-direction: row;
+}
+.dt-buttons button{
+    width: 80px;
+}
+.new-purchase{
+    display: flex;
+}
+section{
+    background-color: #f2f2f2;
+
+}
+#exportData tbody tr td button{
+margin: 0;
+padding: 8px;
+}
+#exportData { border-collapse: collapse; }
+#exportData th, #exportData td { border: solid 0.1px rgb(177, 172, 172); }
+
+.del-img{
+        width:30px;
+      }
+      .del-img{
+        text-align: center;
+      }
+      
+#edit-modal{
+    margin: auto;
+    padding: 30px;
+    border: none;
+    width: 25%;
+}
+#edit-modal div{
+  display: flex;
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(4px);
+}
+
+      </style>
+</head>
+<body >
+    <!-- HEADER SECTION STARTS -->
+    <header>
+        <p>SRGPL</p>
+        <nav>
+            <ul>
+              <li><a href="recharge.html" class="link">Recharge</a></li>
+              <li><a href="dashboard.html" class="link">Sale</a></li>
+              <li><a href="withdraw.html" class="link">Withdraw</a></li>
+              <li><a href="expense.html" class="link">Expense</a></li>
+              <li><a href="purchase.html" class="link">Purchase</a></li>
+              <li><a href="service.html" class="link">Service</a></li>
+              <li><a href="credits.html" class="link">Credits</a></li>
+              <li><a href="stocks.html" class="link">Stocks</a></li>
+              <li><a href="orders.html" class="link">Orders</a></li>
+              <li><a href="daily.html" class="link">Daily</a></li>
+              <li><a href="customers.html" class="link">Customers</a></li>
+              <li><a href="return.html" class="link">Return</a></li>
+              <li><a href="overview.html" class="link">Overview</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- HEADER SECTION ENDS -->
+
+<!-- LIVE SEARCH SECTION STARTS -->
+<section class="dashboard-container" style="text-align: center;">
+    <div class="new-purchase" style="width: 75%;margin: auto;">
+  <input type="text" id="name" placeholder="Name" name="name">
+  <input type="text" id="mobile" name="mobile" placeholder="Mobile">
+  <input type="text" id="particular" name="particular" placeholder="Particular">
+  <input type="text" id="remarks" name="remarks" placeholder="Remarks">
+        <!-- <form action="" enctype="multipart/form-data" id="purchase-form">
+          <input type="text" id="shop" name="shop" placeholder="Shop">
+          <input type="text" id="particular" name="particular" placeholder="Particular">
+          <input type="text" id="price" name="price" placeholder="Price">
+          <input type="text" id="status" name="status" placeholder="Paid or Not">
+          <input type="submit" id="purchase-btn"   value="SUBMIT">
+        </form> -->
+        <button type="submit" style="margin-right: 8px;width: 100px;" class="update-btn" id="order-update-btn">SUBMIT</button>
+        <button type="submit" style="margin-right: 8px;width: 100px;" class="history-btn" id="history-btn">HISTORY</button>
+        
+
+
+      </div>
+     
+            
+</section>
+<!-- LIVE SEARCH SECTION ENDS -->
+
+<!-- TABLE CONTAINER STARTS -->
+    <div class="outputFields">
+        <!-- <div class="availableData">
+            <strong>Available Data</strong>
+        </div> -->
+    <!-- CUSTOMER TABLE ENDS -->
+        <table id="exportData">          
+        </table>
+    <!-- CUSTOMER TABLE ENDS -->
+    <!-- EXPORT TO EXCEL BUTTON STARTS -->
+        <!-- <div class="exportbtn btn">
+            <button style="width: 100px;" onclick="ExportToExcel('xlsx')">EXPORT</button>
+        </div> -->
+    <!-- EXPORT TO EXCEL BUTTON ENDS -->
+    </div>
+
+<!-- TABLE CONTAINER ENDS -->
+
+
+  
+<!-- LOGOUT BUTTON STARTS -->
+  
+<div class="logout">
+    <div class="logItem">
+      <a href="profile.html"><img src="profile.png" alt=""></a>
+    </div>
+    <div class="logItem">
+      <img src="shutdown.png" alt="" onclick="document.getElementById('id02').style.display='block'">
+    </div>
+</div>
+<!-- LOGOUT BUTTON ENDS -->
+
+
+
+
+  <!-- COLLECTION UPDATE STARTS-->
+  <div id="id01" class="modal" style="animation:none; padding-top: 0;overflow: hidden;">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+    <form class="modal-content update-modal" action="">
+      <div class="container">
+       <form class="amount-update">
+        <input type="text" name="data-id" id="data-id" style="display: none;">
+      
+         <div class="inputFields">
+            <label for="remarks-update">Remarks</label>
+            <select name="status" id="status">
+                <option value="0">Success</option>
+                <option value="1">Delivered</option>
+                <option value="2">Failed</option>
+                <option value="3">Cancelled</option>
+            </select>
+        </div>    
+        <div class="inputFields">
+            <label for="remarks-update">Remarks</label>
+            <input type="text" name="rem" id="rem" placeholder="Remarks">
+        </div>    
+        <div class="inputFields">
+            <button type="submit" id="order-submit">SUBMIT </button>
+        </div>  
+       </form>
+        </div>
+      </div>
+    </form>
+  </div>    
+  <!-- COLLECTION UPDATE ENDS-->
+
+  <div id="id02" class="logModal">
+    <span onclick="document.getElementById('id02').style.display='none'" class="logClose" title="logClose logModal">×</span>
+    
+      <div class="logContainer">
+        <h1>Logout Account</h1>
+        <br>
+        <p>Are you sure you want to logout your account?</p>
+        <br>
+        <br>
+      
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+          <button type="button" onclick="logout()" class="deletebtn">Logout</button>
+
+        </div>
+      </div>
+  </div>
+
+  
+  <dialog id="edit-modal">
+    <input type="text" name="edit-id" id="edit-id" placeholder="Enter the ID" >
+  
+    <div>
+      <button id="cancel-btn">CANCEL</button>
+      <button id="delete-btn">DELETE</button>
+    
+    </div>
+    </dialog>
+    
+    <script src="customer.js"></script>
+    <script src="app.js"></script>
+
+    <script type="text/javascript">
+const dialog = document.getElementById('edit-modal');
+
+function logout(){
+  localStorage.clear();
+  location.href='logout.php';
+}
+
+
+$("#delete-btn").click(function(){
+  var id = $("#edit-id").val();
+  var which = 3;
+  if(id!=""){
+    $.ajax({
+      url : "delete.php",
+      method : "POST",
+      data : {
+        id : id,
+        which : which
+      },
+      success : function(data){
+    dialog.close();
+        $('#'+id).remove();
+        $("#edit-id").val("");
+      }
+    })
+  }
+})
+window.onload = () =>{
+  var email = localStorage.getItem("srgpl");
+  if(email==null){
+   window.location.href="login.php";
+  }
+}
+   
+
+$(window).click(function(){
+    if(event.target==dialog){
+    dialog.close();
+}
+})
+$("#cancel-btn").click(function(){
+  dialog.close();
+  
+})
+
+function collBtn(){
+    var buttons = document.querySelectorAll(".coll-btn");
+    buttons.forEach(btn =>{
+        btn.onclick = () =>{
+            var data_id = btn.dataset.id;
+            document.getElementById("id01").style.display = "block";
+            document.getElementById("data-id").value = data_id;
+            console.log(data_id);
+        }
+    })
+    
+    }
+    
+        
+// TO HIDE THE BALANCE UPDATE MODAL STARTS...
+        var modal2 = document.getElementById('id01'); 
+        window.onclick = function(event) {
+          if (event.target == modal2) {
+            modal2.style.display = "none";
+          }
+        }
+
+        document.querySelector(".update-modal").onsubmit = (e)=>{
+            e.preventDefault();
+        }
+// TO HIDE THE BALANCE UPDATE MODAL ENDS...
+$(document).ready(function(){
+    $.ajax({
+        url : 'ordersdisplay.php',
+        method : "POST",
+        success : function(data){
+            $("#exportData").html(data);
+            collBtn();
+            $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                        dialog.showModal();
+                       
+                    })
+                });
+           
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+        }
+    })
+})
+
+$("#history-btn").click(function(){
+    window.open("orderhistory.html","_blank");
+})
+$(document).ready(function(){
+    $("#order-submit").click(function(){
+        console.log("Hello");
+        var id = $("#data-id").val();
+        var status  = $("#status").val();
+        var remarks  = $("#rem").val();
+            $("#id01").css("display","none");
+            $.ajax({
+                url : "orderupdate.php",
+                method : "POST",
+                data : {
+                    id : id,
+                    remarks : remarks,
+                    status : status
+                },
+                success : function(data){
+                     var dataArr = data.split(".");
+                    $('tr#'+id+' td.sts').text(dataArr[0]);
+                    $('tr#'+id+' td.rem').text(dataArr[1]);
+                    if(dataArr[0]=="Cancelled" || dataArr[0]=="Delivered"){
+                    $('#'+id ).remove();
+                    }
+                    $("#rem").val(""); 
+                }
+            })
+        
+    })
+})
+
+$(document).ready(function(){
+    $("#order-update-btn").click(function(){
+        var name = $("#name").val();
+        var particular = $("#particular").val();
+        var mobile = $("#mobile").val();
+        var remarks = $("#remarks").val();
+        if(name!="" && mobile!="" && particular!=""){
+            $.ajax({
+                url : "order.php",
+                method : "POST",
+                data : {
+                    name : name,
+                    mobile : mobile,
+                    particular : particular,
+                    remarks : remarks
+                },
+                success : function(data){
+                    if(data.length==28){
+                        alert(data);
+                    }
+                    else{
+                        console.log(data);
+
+                    $("#exportData").html(data);
+                    $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                        dialog.showModal();
+                       
+                    })
+                });
+                    collBtn();
+    $("#name").val("");
+        $("#particular").val("");
+        $("#mobile").val("");
+        $("#remarks").val("");
+                   
+   
+    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+                }
+                }
+            })
+        }
+    })
+})
+
+       
+   
+$(document).ready(function (){
+    var modal = $("#myModal");
+    $(window).click(function(){
+        if(event.target==modal){
+        modal.css("display", "none");
+    }
+    })
+  
+})
+
+// FUNCTION TO CLOSE THE NEW CUSTOMER MODAL WHEN THE CLOSE ICON IS CLICKED STARTS...
+
+$(document).ready(function (){
+    $(".close").click(function(){
+        $("#myModal").css("display", "none");
+    
+    })
+   
+})
+// FUNCTION TO CLOSE THE NEW CUSTOMER MODAL WHEN THE CLOSE ICON IS CLICKED ENDS...
+
+
+// FUNCTION TO EXPORT TABLES IN EXCEL FORMAT STARTS...
+
+    function ExportToExcel(type, fn, dl) {
+    var elt = document.getElementById('exportData');
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ?
+      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+      XLSX.writeFile(wb, fn || ('credits.' + (type || 'xlsx')));
+}
+// FUNCTION TO EXPORT TABLES IN EXCEL FORMAT ENDS...
+
+    </script>
+    
+
+</body>
+</html>

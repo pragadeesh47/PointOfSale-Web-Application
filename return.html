@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRGPL | Sale Return</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="logout.css">
+    <link rel="stylesheet" href="sale.css">
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="icon" href="logo.png" sizes = 32x32 type="image/icon type">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
+  
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.js"></script>
+
+
+
+    <style>
+
+      table{
+        width: 50%;
+      }
+.select2-container--default .select2-selection--single,
+.select2-selection .select2-selection--single {
+    border: 1px solid #d2d6de;
+    border-radius: 0;
+    padding: 6px 12px;
+    height: 34px
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px
+}
+
+.select2-container .select2-selection--single {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    height: 28px;
+    user-select: none;
+    -webkit-user-select: none
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-right: 10px
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+    padding-right: 0;
+    height: auto;
+    margin-top: -3px
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 28px
+}
+
+.select2-container--default .select2-selection--single,
+.select2-selection .select2-selection--single {
+    border: 1px solid #d2d6de;
+    border-radius: 0 !important;
+    padding: 6px 12px;
+    height: 40px !important
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 26px;
+    position: absolute;
+    top: 6px !important;
+    right: 1px;
+    width: 20px
+}
+.select2-hidden-accessible {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important
+}
+     .sale{
+        display: flex;
+        align-items: center;
+     }
+     .logout{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     }
+     .logout img{
+      margin-right: 5px;
+     }
+     .logout img{
+  height: 25px;
+  width: 25px;
+}
+#exportData tbody tr td button{
+margin: 0;
+padding: 8px;
+}
+#exportData { border-collapse: collapse; }
+#exportData th, #exportData td { border: solid 0.1px rgb(177, 172, 172); }
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <p>SRGPL</p>
+        <nav>
+            <ul>
+              <li><a href="recharge.html" class="link">Recharge</a></li>
+                <li><a href="dashboard.html" class="link">Sale</a></li>
+              <li><a href="withdraw.html" class="link">Withdraw</a></li>
+                <li><a href="expense.html" class="link">Expense</a></li>
+                <li><a href="purchase.html" class="link">Purchase</a></li>
+                <li><a href="service.html" class="link">Service</a></li>
+                <li><a href="credits.html" class="link">Credits</a></li>
+                <li><a href="stocks.html" class="link">Stocks</a></li>
+                <li><a href="orders.html" class="link">Orders</a></li>
+                <li><a href="daily.html" class="link">Daily</a></li>
+                <li><a href="customers.html" class="link">Customers</a></li>
+                <li><a href="return.html" class="link">Return</a></li>
+                <li><a href="overview.html" class="link">Overview</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="dashboard-container">
+        <div class="sale" style="width: 80%;">
+            <!-- <form action="" enctype="multipart/form-data" id="form-submit">
+              <input type="text" id="item" name="item" placeholder="Enter the item">
+              <input type="text" id="quantity" name="quantity" placeholder="How many items">
+              <input type="text" id="price" name="price" placeholder="How much">
+              <input type="submit" id="update-btn"   value="SUBMIT">
+            <button style="background-color: dodgerblue; width: 200px;" class="btn" id="myBtn"><i class="fa fa-user-plus"></i></button>
+            </form> -->
+            <!-- <form action="" enctype="multipart/form-data" id="sale-update"></form> -->
+            <!-- <input type="text" id="live-search" placeholder="Search.." name="search2"> -->
+            <div style="padding:0;">
+              <select class="js-example-basic-single" name="state" style="width: 200px;padding: 14px 20px;">
+               
+              </select>
+            </div>
+            <input type="text" id="update-quantity" name="update-quantity" placeholder="Quantity">
+            <input type="text" id="update-price" name="update-price" placeholder="Price">
+            <input type="text" id="remarks" name="remarks" placeholder="remarks">
+            <input type="submit" id="sale-update-btn"   value="SUBMIT">
+
+          </div>
+          <div class="filter-class">
+            <form action="" enctype="multipart/form-data" id="form-filter">
+              <input type="date" id="fromDate" name="fromDate" placeholder="Enter the item">
+              <input type="date" id="toDate" name="toDate" placeholder="How much">
+              <input type="submit" id="filter-btn" value="FILTER">
+            </form>
+          </div>       
+    </section>
+   
+    <div class="show-button">
+        <button id="show-btn">Show</button>
+        <button id="hide-btn">Hide</button>
+    </div>
+    <div class="outputFields">
+      <!-- <div class="availableData">
+          <strong>Available Data</strong>
+      </div> -->
+      <table id="exportData">
+
+      
+          <tr>
+              <th>Serial No</th>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Price</th>
+          </tr>
+         
+      </table>
+    
+      <!-- <div class="exportbtn btn">
+          <button style="width: 100px;" onclick="ExportToExcel('xlsx')">EXPORT</button>
+      </div> -->
+  </div>
+
+  
+<div id="id02" class="logModal">
+  <span onclick="document.getElementById('id02').style.display='none'" class="logClose" title="logClose logModal">×</span>
+  
+    <div class="logContainer">
+      <h1>Logout Account</h1>
+        <br>
+        <p>Are you sure you want to logout your account?</p>
+        <br>
+        <br>
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="logBtn cancelbtn">Cancel</button>
+        <button type="button" onclick="logout()" class="deletebtn">Logout</button>
+
+      </div>
+    </div>
+</div>
+
+
+  <!-- MODAL -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form action="" enctype="multipart/form-data" id="form-submit">
+        <input type="text" id="item" name="item" placeholder="Item">
+        <!-- <input type="text" id="quantity" name="quantity" placeholder="Quantity">
+        <input type="text" id="price" name="price" placeholder="Price"> -->
+        <input type="text" id="rate" name="rate" placeholder="Rate">
+        <input type="submit" id="update-btn"  value="SUBMIT">
+      </form>
+    </div>
+  </div>
+
+
+  <div class="logout">
+    <div class="logItem">
+      <a href="profile.html"><img src="profile.png" alt=""></a>
+    </div>
+    <div class="logItem">
+      <img src="shutdown.png" alt="" onclick="document.getElementById('id02').style.display='block'">
+    </div>
+</div>
+
+  <script>
+
+function logout(){
+  localStorage.clear();
+  location.href='logout.php';
+}
+
+    // Get the logModal
+var logModal = document.getElementById('id02');
+
+// When the user clicks anywhere outside of the logModal, logClose it
+window.onclick = function(event) {
+  if (event.target == logModal) {
+    logModal.style.display = "none";
+  }
+}
+
+window.onload = () =>{
+  var email = localStorage.getItem("srgpl");
+  if(email==null){
+   window.location.href="login.php";
+  }
+}
+   
+$(document).ready(function(){
+  $("#update-btn").click(function(){
+    var item = $("#item").val();
+    var rate = $("#rate").val();
+    if (item!=""){
+      $("#myModal").hide();
+      $.ajax({
+        url : "update.php",
+        method : "POST",
+        data : {
+          item : item,
+          rate : rate
+        },
+        success : function(data){
+          console.log(data);
+          $.ajax({
+                    url : "saleitem.php",
+                    method : "POST",
+                    success : function(data){
+                      $("select").html(data);
+                    }
+                  })
+                $("#item").val("");
+                $("#quantity").val("");
+                $("#rate").val("");
+                $("#price").val("");
+
+        }
+      })
+    }
+    else{
+      alert("Required Fields are missing");
+    }
+
+  })
+})
+
+
+// $(document).ready(function(){
+  $("#update-quantity").keyup(function(){
+    var itemID = $("select").val();
+    var quantity = $("#update-quantity").val(); 
+    $.ajax({
+      url : "pricefixer.php",
+      method : "POST",
+      data : {
+        itemID : itemID,
+        quantity : quantity
+      },
+      success : function(data){
+        var price = $("#update-price").val();
+        $("#update-price").val(data);
+        console.log(data);
+        console.log($("#update-price").val())
+    
+      }
+    })
+  })
+// })
+
+
+
+  var d = new Date();
+
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    
+    var output = d.getFullYear() + '-' +
+        (month<10 ? '0' : '') + month + '-' +
+        (day<10 ? '0' : '') + day;
+document.getElementById("fromDate").value = output;
+document.getElementById("toDate").value = output;
+
+console.log(output)
+$(document).ready(function(){
+  $.ajax({
+    url : "saleitem.php",
+    method : "POST",
+    success : function(data){
+      $("select").html(data);
+    }
+  })
+})
+
+var empty = "";
+
+
+        $(document).ready(function(){
+      
+      $("#sale-update-btn").click(function(){
+            var id = $('select').val();
+              var quantity = $('#update-quantity').val();
+              var price = $('#update-price').val();
+              var remarks = $('#remarks').val();
+            
+
+              if(id=="" || price =="" || quantity==""){
+        alert("Required Fields are Missing");
+       }
+       else{
+
+
+          $.ajax({
+                      url:"returnupdate.php",
+                      method : "POST",
+                      data:{id:id,
+                      quantity:quantity,
+                      price : price,
+                      remarks : remarks
+                      },
+                      success : function(data){
+                        //   $("#exportData").html(data);
+                          console.log(data);
+                      }
+                      
+
+                  })
+                  $("select").val(empty);
+                  $("#update-quantity").val(empty);
+                  $("#update-price").val(empty);
+                  $("#remarks").val(empty);
+  }
+
+      })
+    })
+
+
+    $(document).ready(function(){
+        $("#show-btn").click(function(){
+            $.ajax({
+                      url:"returndisplay.php",
+                      method : "POST",
+                      success : function(data){
+                        //   $("#exportData").html(data);
+                          var dataArr = data.split(".");
+                          $(".outputFields").show();
+                          $("#exportData").html(dataArr[0]);
+                          $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+                      }
+                      
+
+                  })
+           
+        })
+    })
+
+    $(document).ready(function(){
+        $("#hide-btn").click(function(){
+            $(".outputFields").hide();
+        })
+    })
+
+
+
+    $(document).ready(function(){
+      $("#filter-btn").click(function(){
+       var fromDate = $("#fromDate").val();
+       var toDate = $("#toDate").val();
+       if(!fromDate=="" || !toDate==""){
+
+        $.ajax({
+          url : "returndisplay.php",
+          method : "POST",
+          data : {
+            fromDate : fromDate,
+            toDate : toDate
+          },
+          success : function(data){
+            var dataArr = data.split(".");
+                          $(".outputFields").show();
+                          $("#exportData").html(dataArr[0]);
+                          $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+          }
+        })
+       }else{
+        alert("Required Fields are missing");
+       }
+
+        
+      })
+    })
+
+
+
+
+
+
+
+
+
+
+
+ // MODAL CLOSE
+ $(document).ready(function(){
+      $(".close").click(function(){
+        $(".modal").hide();
+      })
+    })
+    // $(document).ready(function(){
+    //   $("#update-btn").click(function(){
+    //    var item = $("#item").val();
+    //    var quantity = $("#quantity").val();
+    //    var price = $("#price").val();
+    //    if(item=="" || price =="" || quantity==""){
+    //     alert("Required Fields are Missing");
+    //    }
+    //    else{
+    //     $(".modal").hide();
+    //    }
+    //   })
+    // })
+
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+
+    
+  </script>
+  
+
+
+    <script src="app.js"></script>
+    <script src="update.js"></script>
+
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+</body>
+</html>

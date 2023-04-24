@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRGPL | Profile</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="sale.css">
+    <link rel="stylesheet" href="logout.css">
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="icon" href="logo.png" sizes = 32x32 type="image/icon type">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
+
+    <style>
+     .sale{
+        display: flex;
+        align-items: center;
+     }
+     .logout{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     }
+     .logout img{
+      margin-right: 5px;
+     }
+     .logout img{
+  height: 25px;
+  width: 25px;
+}
+     .profile-form{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        margin: 20px auto;
+     }
+
+    </style>
+</head>
+<body>
+    <header>
+        <p>SRGPL</p>
+        <nav>
+            <ul>
+              <li><a href="recharge.html" class="link">Recharge</a></li>
+                <li><a href="dashboard.html" class="link">Sale</a></li>
+              <li><a href="withdraw.html" class="link">Withdraw</a></li>
+              <li><a href="expense.html" class="link">Expense</a></li>
+              <li><a href="purchase.html" class="link">Purchase</a></li>
+              <li><a href="service.html" class="link">Service</a></li>
+              <li><a href="credits.html" class="link">Credits</a></li>
+              <li><a href="stocks.html" class="link">Stocks</a></li>
+              <li><a href="orders.html" class="link">Orders</a></li>
+              <li><a href="daily.html" class="link">Daily</a></li>
+              <li><a href="customers.html" class="link">Customers</a></li>
+              <li><a href="return.html" class="link">Return</a></li>
+              <li><a href="overview.html" class="link">Overview</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="profile-container">
+        <form action="" class="profile-form" id = "profile-form">
+            <div class="profileFields">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" readonly>
+            </div>
+            <div class="profileFields">
+                <label for="username">Shop Name</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div class="profileFields">
+                <label for="mobile">Mobile</label>
+                <input type="text" name="mobile" id="mobile">
+            </div>
+            <div class="profileFields">
+                <label for="address">Address</label>
+                <input type="text" name="address" id="address">
+            </div>
+            <div class="profileFields">
+                <label for="pincode">Pincode</label>
+                <input type="text" name="pincode" id="pincode">
+            </div>
+            <div class="profileFields">
+                <button id="save-btn" >SAVE</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="id02" class="logModal">
+        <span onclick="document.getElementById('id02').style.display='none'" class="logClose" title="logClose logModal">×</span>
+        
+          <div class="logContainer">
+            <h1>Logout Account</h1>
+            <br>
+            <p>Are you sure you want to logout your account?</p>
+            <br>
+            <br>
+            <div class="clearfix">
+              <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+              <button type="button" onclick="logout()" class="deletebtn">Logout</button>
+
+            </div>
+          </div>
+      </div>
+    
+
+      <div class="logout">
+        <div class="logItem">
+          <a href="profile.html"><img src="profile.png" alt=""></a>
+        </div>
+        <div class="logItem">
+          <img src="shutdown.png" alt="" onclick="document.getElementById('id02').style.display='block'">
+        </div>
+    </div>
+
+  <script>
+
+window.onload = () =>{
+  var email = localStorage.getItem("srgpl");
+  if(email==null){
+   window.location.href="login.php";
+  }
+}
+function logout(){
+  localStorage.clear();
+  location.href='logout.php';
+}
+    document.getElementById("profile-form").onsubmit = (e) =>{
+        e.preventDefault();
+    }
+    $(document).ready(function(){
+        $.ajax({
+            url : "profile.php",
+            method : "POST",
+            success : function(data){
+                var dataArr = data.split(",");
+                $("#email").val(dataArr[0]);
+                $("#username").val(dataArr[1]);
+                $("#mobile").val(dataArr[2]);
+                $("#address").val(dataArr[3]);
+                $("#pincode").val(dataArr[4]);
+
+            }
+        })
+    })
+
+    $("#save-btn").click(function(){
+        var email =  $("#email").val();
+        var mobile =  $("#mobile").val();
+        var name =  $("#username").val();
+        var address =  $("#address").val();
+        var pincode =  $("#pincode").val();
+        $.ajax({
+            url : "profile.php",
+            method : "POST",
+            data : {
+                email : email,
+                name : name,
+                mobile : mobile,
+                address : address,
+                pincode : pincode
+            },
+            success : function(data){
+                alert("Saved");
+                var dataArr = data.split(",");
+                $("#email").val(dataArr[0]);
+                $("#username").val(dataArr[1]);
+                $("#mobile").val(dataArr[2]);
+                $("#address").val(dataArr[3]);
+                $("#pincode").val(dataArr[4]);
+            }
+        })
+
+    })
+  </script>
+  
+
+
+    <script src="app.js"></script>
+    <script src="update.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+</body>
+</html>

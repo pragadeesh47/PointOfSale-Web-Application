@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRGPL | Recharge</title>
+    <link rel="icon" href="logo.png" sizes = 32x32 type="image/icon type">
+
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="logout.css">
+    <link rel="stylesheet" href="sale.css">
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
+  
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.js"></script>
+
+
+
+    <style>
+
+      table{
+        width: 50%;
+      }
+.select2-container--default .select2-selection--single,
+.select2-selection .select2-selection--single {
+    border: 1px solid #d2d6de;
+    border-radius: 0;
+    padding: 6px 12px;
+    height: 34px
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px
+}
+
+.select2-container .select2-selection--single {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    height: 28px;
+    user-select: none;
+    -webkit-user-select: none
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-right: 10px
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+    padding-right: 0;
+    height: auto;
+    margin-top: -3px
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 28px
+}
+
+.select2-container--default .select2-selection--single,
+.select2-selection .select2-selection--single {
+    border: 1px solid #d2d6de;
+    border-radius: 0 !important;
+    padding: 6px 12px;
+    height: 40px !important
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 26px;
+    position: absolute;
+    top: 6px !important;
+    right: 1px;
+    width: 20px
+}
+.select2-hidden-accessible {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important
+}
+     .sale{
+        display: flex;
+        align-items: center;
+     }
+     .logout{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     }
+     .logout img{
+      margin-right: 5px;
+     }
+     .logout img{
+  height: 25px;
+  width: 25px;
+}
+
+
+
+
+
+
+
+.sale select{
+    padding: 12px 20px;
+}
+
+.sale{
+    display: flex;
+    justify-content: center;
+}
+
+
+.network-container{
+    width: 100%
+}
+.network-container div{
+    padding: 10px;
+}
+.networks{
+    width: 50%;
+}
+
+.toggleNetwork{
+    display: flex ;
+    justify-content: center;
+}
+.toggleNetwork div{
+  padding: 0;
+  margin: 0;
+}
+.networks-display{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    
+    
+}
+.checkNumber p {
+    font-size: 6rem;
+}
+.dthNet{
+    display: none;
+}
+
+.filter-class{
+    display: none;
+}
+
+#networkType{
+    padding: 12px 18px;
+}
+.networkBtn input{
+  padding: 10px;
+}
+
+.select-class{
+  padding: 2px;
+  margin: 2px;
+}
+
+.inputFields label{
+  padding: 2px;
+}
+.inputFields input{
+  margin: 2px;
+}
+
+.net-img img{
+  width: 35%;
+  padding: 20px;
+  cursor: pointer;
+  border: 1px solid black;
+}
+.net-img{
+  text-align: center;
+  margin: 5px;
+  padding: 10px;
+}
+.active{
+  border: 2px solid black;  
+}
+.otherNet{
+  display: none;
+}
+
+#display-items{
+  padding: 12px 18px;
+  width: 200px;
+}
+#display-items option{
+  padding: 10px;
+}
+.show-button{
+  display: flex;
+  width: 100%;
+}
+.show-button div{
+  width: 50%;
+}
+.show-button .filter-input{
+  display: flex;
+}
+.checkNumber{
+    word-break: break-all;
+    text-align: center;
+}
+#exportData tbody tr td button{
+margin: 0;
+padding: 8px;
+}
+#exportData { border-collapse: collapse; }
+#exportData th, #exportData td { border: solid 0.1px rgb(177, 172, 172); }
+
+.toggleNetwork button{
+  padding: 10px;
+  
+}
+.togBtn{
+  width: 160px;
+}
+
+.updateSales div{
+  margin: 0;
+  padding: 5px;
+}
+#edit-modal{
+  margin: auto;
+  padding: 20px;
+  border: none;
+  width: 25%;
+}
+
+#edit-modal div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#edit-id{
+  display: none;
+}
+.inputFields div{
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <p>SRGPL</p>
+        <nav>
+            <ul>
+              <li><a href="recharge.html" class="link active-link">Recharge</a></li>
+              <li><a href="dashboard.html" class="link">Sale</a></li>
+              <li><a href="withdraw.html" class="link">Withdraw</a></li>
+              <li><a href="expense.html" class="link">Expense</a></li>
+              <li><a href="purchase.html" class="link">Purchase</a></li>
+              <li><a href="service.html" class="link">Service</a></li>
+              <li><a href="credits.html" class="link">Credits</a></li>
+              <li><a href="stocks.html" class="link">Stocks</a></li>
+              <li><a href="orders.html" class="link">Orders</a></li>
+              <li><a href="daily.html" class="link">Daily</a></li>
+              <li><a href="customers.html" class="link">Customers</a></li>
+              <li><a href="return.html" class="link">Return</a></li>
+              <li><a href="overview.html" class="link">Overview</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="dashboard-container">
+      <div class="toggleNetwork">
+        <!-- <div class="net-img " id="mob-network">
+        <img class="active netImg" src="mobile.png" alt="">
+        </div>
+        <div class="net-img" id="dth-network">
+          <img class="netImg" src="television.png" alt="">
+          </div>
+          <div class="net-img" id="other-network">
+            <img class="netImg" src="operation.png" alt="">
+            </div> -->
+            <div>
+            <button id="mob-network" class="active togBtn">MOBILE</button>
+          </div>
+          <div>
+            <button  id="dth-network" class="togBtn">DTH</button>
+          </div>
+          <div>
+          <button  id="other-network" class="togBtn">OTHER</button>
+        </div>  </div>
+        <div class="sale" style="width: 100%;">
+           
+         
+            <input style="width: 200px;" type="text" id="network" name="network" placeholder="Network">
+            <select name="networkType" id="networkType">
+                <option value="0">Mobile Network</option>
+                <option value="1">DTH Network</option>
+                <option value="2">Other Network</option>
+            </select>
+            <input type="submit" style="width: 150px;" id="network-update-btn"   value="ADD">
+
+
+          </div>
+          <div class="filter-class">
+            <form action="" enctype="multipart/form-data" id="form-filter">
+              <input type="date" id="fromDate" name="fromDate" placeholder="Enter the item">
+              <input type="date" id="toDate" name="toDate" placeholder="How much">
+              <input type="submit" id="filter-btn" value="FILTER">
+            </form>
+          </div>       
+    </section>
+    
+
+
+
+ <section class="network-container">
+    <div class="networks">
+        
+        <div class="updateSales">
+<div class="twoNetworks mobileNet ">
+        <div  class="select-class">
+            <label for="state" >Select Network</label><br><br>
+            <select class="js-example-basic-single" id="mobNet-select"  name="mob-select" style="width: 200px;">
+            </select>
+            <button style="background-color: dodgerblue;width: 50px;" class="btn editBtn"  id="mobile-edit-btn"><i class="fa fa-edit"></i></button>
+
+    </div>
+    <div class="inputFields">
+        <label for="mobile">Mobile</label>
+        <input type="text" name="mobile" id="mobile" placeholder="Mobile">
+    </div>
+    <div class="inputFields">
+        <label for="m-amount">Amount</label>
+        <input type="text" name="m-amount" id="m-amount" placeholder="Amount">
+    </div>
+    <div class="inputFields">
+      <label for="m-balance">Balance</label><div>
+      <input type="text" name="m-old-balance" id="m-old-balance" placeholder="Old Balance">
+      <input type="text" name="m-new-balance" id="m-new-balance" placeholder="New Balance">
+    </div>
+
+  </div>
+    <div class="inputFields networkBtn">
+        <input type = "submit" value="SUBMIT" data-net="0" id="mobile-btn">
+    </div>
+</div>
+<div class="twoNetworks dthNet">
+    <div class="select-class">
+        <label for="state" >Select Network</label><br><br>
+
+        <select class="js-example-basic-single" name="dth-select" id="dthNet-select" style="width: 200px;">
+        </select>
+        <button style="background-color: dodgerblue;width: 50px;" class="btn editBtn"  id="dth-edit-btn"><i class="fa fa-edit"></i></button>
+
+</div>
+    <div class="inputFields">
+        <label for="dth">DTH</label>
+        <input type="text" name="dth" id="dth" placeholder="DTH">
+    </div>
+    <div class="inputFields">
+        <label for="d-amount">Amount</label>
+        <input type="text" name="d-amount" id="d-amount" placeholder="Amount">
+    </div>
+    <div class="inputFields">
+      <label for="d-balance">Balance</label>
+      <div>
+      <input type="text" name="d-balance" id="d-balance" placeholder="Old Balance">
+      <input type="text" name="d-new-balance" id="d-new-balance" placeholder="New Balance">
+    </div>
+  </div>
+    <div class="inputFields networkBtn">
+        <input type = "submit" value="SUBMIT" data-net="1" id="dth-btn">
+    </div>
+</div>
+<div class="threeNetworks otherNet">
+  <div class="select-class">
+      <label for="state" >Select Network</label><br><br>
+
+      <select class="js-example-basic-single" name="other-select" id="other-select" style="width: 200px;">
+      </select>
+      <button style="background-color: dodgerblue;width: 50px;" class="btn editBtn"  id="other-edit-btn"><i class="fa fa-edit"></i></button>
+
+</div>
+  <div class="inputFields">
+      <label for="other">Other</label>
+      <input type="text" name="other" id="other" placeholder="Other">
+  </div>
+  <div class="inputFields">
+      <label for="o-amount">Amount</label>
+      <input type="text" name="o-amount" id="o-amount" placeholder="Amount">
+  </div>
+  <div class="inputFields">
+    <label for="o-balance">Balance</label>
+    <div>
+    <input type="text" name="o-balance" id="o-balance" placeholder="Old Balance">
+    <input type="text" name="o-new-balance" id="o-new-balance" placeholder="New Balance">
+  </div>
+</div>
+  <div class="inputFields networkBtn">
+      <input type = "submit" value="SUBMIT" data-net="2"  id="other-btn">
+  </div>
+</div>
+        </div>
+    </div>
+    <div class="networks-display">
+        <div class="checkNumber">
+            <h1 style="text-align: center;">PLEASE CHECK YOUR NUMBER</h1>
+            <br><br>
+            <p class="verifyNumber"></p>
+        </div>
+    </div>
+
+  </section>
+  
+    <div class="show-button">
+      <div>
+        <select name="display-items" id="display-items">
+          <option value="0">MOBILE</option>
+          <option value="1">DTH</option>
+          <option value="2">OTHER</option>
+        </select>
+        <button id="show-btn" style="width: 100px;">SHOW</button>
+        <button id="hide-btn" style="width: 100px;">Hide</button>
+      </div>
+<div class="filter-input">
+        <input type="text" style="width: 150px;"  name="f-date" id="f-date">
+        <input type="text" style="width: 150px;" name="t-date" id="t-date">
+        <button style="width: 100px;" id="rech-filter-btn">FILTER</button>
+</div>
+
+      </div>
+    <div class="outputFields">
+      <!-- <div class="availableData">
+          <strong>Available Data</strong>
+      </div> -->
+      <table id="exportData">
+
+      
+        
+         
+      </table>
+
+      <!-- <div class="exportbtn btn">
+          <button style="width: 100px;" onclick="ExportToExcel('xlsx')">EXPORT</button>
+      </div> -->
+  </div>
+
+  
+<div id="id02" class="logModal">
+  <span onclick="document.getElementById('id02').style.display='none'" class="logClose" title="logClose logModal">×</span>
+  
+    <div class="logContainer">
+      <h1>Logout Account</h1>
+        <br>
+        <p>Are you sure you want to logout your account?</p>
+        <br>
+        <br>
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="logBtn cancelbtn">Cancel</button>
+        <button type="button" onclick="logout()" class="deletebtn">Logout</button>
+
+      </div>
+    </div>
+</div>
+
+
+  <!-- MODAL -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form action="" enctype="multipart/form-data" id="form-submit">
+        <input type="text" id="item" name="item" placeholder="Item">
+        <!-- <input type="text" id="quantity" name="quantity" placeholder="Quantity">
+        <input type="text" id="price" name="price" placeholder="Price"> -->
+        <input type="text" id="rate" name="rate" placeholder="Rate">
+        <input type="submit" id="update-btn"  value="SUBMIT">
+      </form>
+    </div>
+  </div>
+
+
+  <div class="logout">
+    <div class="logItem">
+      <a href="profile.html"><img src="profile.png" alt=""></a>
+    </div>
+    <div class="logItem">
+      <img src="shutdown.png" alt="" onclick="document.getElementById('id02').style.display='block'">
+    </div>
+</div>
+
+
+<dialog id="edit-modal">
+  <input type="text" name="edit-id" id="edit-id" >
+<input type="text" name="edit-name" id="edit-name" placeholder = "Network">
+<div>
+  <button id="update-name">UPDATE</button>
+  <button id="delete-name">DELETE</button>
+
+</div>
+</dialog>
+
+  <script>
+
+    // $(document).ready(function(){
+    //   $.ajax({
+    //     url : "networkedit.php",
+    //     method : "POST",
+    //     success : function(data){
+    //       $("#all-select").html(data);
+    //     }
+    //   })
+    // })
+
+    $(document).ready(function(){
+
+$(window).click(function(){
+    if(event.target==modal){
+    modal.close();
+}
+})
+})
+
+
+const modal = document.getElementById("edit-modal");
+$("#mobile-edit-btn").click(function(){
+  modal.showModal();
+$("#edit-id").val($("#mobNet-select").val());
+    
+})
+
+$("#update-name").click(function(){
+  var id = $("#edit-id").val();
+  var name = $("#edit-name").val();
+   if(name!=""){
+    $.ajax({
+    url : "networkedit.php",
+    method : "POST",
+    data : {
+      id : id,
+      name : name
+    },
+    success : function(data){
+      $("#edit-id").val("");
+      $("#edit-name").val("");
+      modal.close();
+
+      $.ajax({
+    url : "mobilenetworks.php",
+    method : "POST",
+    success : function(data){
+        $("#mobNet-select").html(data);
+    }
+    })
+    $.ajax({
+    url : "dthnetworks.php",
+    method : "POST",
+    success : function(data){
+        $("#dthNet-select").html(data);
+    }
+    })
+    $.ajax({
+    url : "othernetworks.php",
+    method : "POST",
+    success : function(data){
+        $("#other-select").html(data);
+    }
+    })
+    }
+  })
+   }
+})
+
+$("#delete-name").click(function(){
+  var id = $("#edit-id").val();
+  $.ajax({
+    url : "networkedit.php",
+    method : "POST",
+    data : {
+      id : id
+    },
+    success : function(data){
+      $("#edit-id").val("");
+      modal.close();
+
+      $.ajax({
+    url : "mobilenetworks.php",
+    method : "POST",
+    success : function(data){
+        $("#mobNet-select").html(data);
+    }
+    })
+    $.ajax({
+    url : "dthnetworks.php",
+    method : "POST",
+    success : function(data){
+        $("#dthNet-select").html(data);
+    }
+    })
+    $.ajax({
+    url : "othernetworks.php",
+    method : "POST",
+    success : function(data){
+        $("#other-select").html(data);
+    }
+    })
+    }
+  })
+})
+$("#dth-edit-btn").click(function(){
+  modal.showModal();
+$("#edit-id").val($("#dthNet-select").val());
+
+})
+
+
+$("#other-edit-btn").click(function(){
+  modal.showModal();
+$("#edit-id").val($("#other-select").val());
+
+})
+function logout(){
+  localStorage.clear();
+  location.href='logout.php';
+}
+
+    // Get the logModal
+var logModal = document.getElementById('id02');
+
+// When the user clicks anywhere outside of the logModal, logClose it
+window.onclick = function(event) {
+  if (event.target == logModal) {
+    logModal.style.display = "none";
+  }
+}
+window.onload = () =>{
+  var email = localStorage.getItem("srgpl");
+  if(email==null){
+   window.location.href="login.php";
+  }
+}
+   
+$("#show-btn").click(function(){
+  var id = $("#display-items").val();
+  $.ajax({
+    url : "rechargedisplay.php",
+    method : "POST",
+    data : {
+      id : id
+    },
+    success : function(data){
+$("#exportData").html(data);
+  $(".outputFields").show()
+  console.log(data);
+$('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+    //          $("#display-items").on('change',function(){
+    // $('#exportData').DataTable().clear().destroy();
+    // $(".outputFields").hide();
+    //          })
+
+    }  
+  })
+})
+  
+$("#rech-filter-btn").click(function(){
+  var id = $("#display-items").val();
+  var fromDate = $("#f-date").val();
+  var toDate = $("#t-date").val();
+  $.ajax({
+    url : "rechargefilter.php",
+    method : "POST",
+    data : {
+      id : id,
+      fromDate :fromDate,
+      toDate : toDate
+    },
+    success : function(data){
+$("#exportData").html(data);
+  $(".outputFields").show()
+  console.log(data);
+$('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+    //          $("#display-items").on('change',function(){
+    // $('#exportData').DataTable().clear().destroy();
+    // $(".outputFields").hide();
+    //          })
+
+    }  
+  })
+})
+
+$("#mobile").keyup(function(){
+  $(".verifyNumber").text($("#mobile").val());
+})
+$("#dth").keyup(function(){
+  $(".verifyNumber").text($("#dth").val());
+})
+
+$("#other").keyup(function(){
+  $(".verifyNumber").text($("#other").val());
+})
+$("#mob-network").click(function(){
+    $(".mobileNet").show();
+    $(".dthNet").hide();
+    $(".otherNet").hide();
+})
+$("#dth-network").click(function(){
+    $(".mobileNet").hide();
+    $(".otherNet").hide();
+    $(".dthNet").show();
+})
+$("#other-network").click(function(){
+    $(".mobileNet").hide();
+    $(".dthNet").hide();
+    $(".otherNet").show();
+})
+$(".toggleNetwork button").each(function(){
+    $(this).click(function(){
+      $(".toggleNetwork button").removeClass("active")
+        $(this).addClass("active")
+})
+});
+
+$("#mobile-btn").click(function(){
+  var id = $("#mobNet-select").val();
+  var number = $("#mobile").val();
+  var amount = $("#m-amount").val();
+  var balance = $("#m-old-balance").val();
+  var newBalance = $("#m-new-balance").val();
+  var btn = $("#mobile-btn").attr("data-net");
+  if(number!="" && amount!="" && newBalance!=""){
+  $.ajax({
+    url : "rechargehistory.php",
+    method : "POST",
+    data : {
+      btn : btn,
+      id : id,
+      number : number,
+      amount : amount,
+      balance : balance,
+      newBalance : newBalance
+    },
+    success : function(data){
+      $("#mobile").val("");
+      $("#m-amount").val("");
+      $("#m-old-balance").val("");
+      $("#m-new-balance").val("");
+      location.reload();
+
+    }
+  })
+  }
+})
+
+$("#dth-btn").click(function(){
+  var id = $("#dthNet-select").val();
+  var number = $("#dth").val();
+  var amount = $("#d-amount").val();
+  var balance = $("#d-balance").val();
+  var newBalance = $("#d-new-balance").val();
+  var btn = $("#dth-btn").attr("data-net");
+  if(number!="" && amount!="" && newBalance!=""){
+  $.ajax({
+    url : "rechargehistory.php",
+    method : "POST",
+    data : {
+      btn : btn,
+      id : id,
+      number : number,
+      amount : amount,
+      balance : balance,
+      newBalance : newBalance
+    },
+    success : function(data){
+      $("#dth").val("");
+      $("#d-amount").val("");
+      $("#d-balance").val("");
+      $("#d-new-balance").val("");
+      location.reload();
+
+
+    }
+  })
+  }
+})
+
+$("#other-btn").click(function(){
+  var id = $("#other-select").val();
+  var number = $("#other").val();
+  var amount = $("#o-amount").val();
+  var balance = $("#o-balance").val();
+  var newBalance = $("#o-new-balance").val();
+  var btn = $("#other-btn").attr("data-net");
+  if(number!="" && amount!="" && newBalance!=""){
+  $.ajax({
+    url : "rechargehistory.php",
+    method : "POST",
+    data : {
+      btn : btn,
+      id : id,
+      number : number,
+      amount : amount,
+      balance : balance,
+      newBalance : newBalance
+    },
+    success : function(data){
+      $("#other").val("");
+      $("#o-amount").val("");
+      $("#o-balance").val("");
+      $("#o-new-balance").val("");
+    location.reload();
+    }
+  })
+  }
+})
+
+
+
+  var d = new Date();
+
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    
+    var output = d.getFullYear() + '-' +
+        (month<10 ? '0' : '') + month + '-' +
+        (day<10 ? '0' : '') + day;
+document.getElementById("fromDate").value = output;
+document.getElementById("toDate").value = output;
+document.getElementById("f-date").value = output;
+document.getElementById("t-date").value = output;
+
+console.log(output)
+$(document).ready(function(){
+    $.ajax({
+    url : "mobilenetworks.php",
+    method : "POST",
+    success : function(data){
+        $("#mobNet-select").html(data);
+    }
+    })
+    $.ajax({
+    url : "dthnetworks.php",
+    method : "POST",
+    success : function(data){
+        $("#dthNet-select").html(data);
+    }
+    })
+    $.ajax({
+    url : "othernetworks.php",
+    method : "POST",
+    success : function(data){
+        $("#other-select").html(data);
+    }
+    })
+})
+
+var empty = "";
+
+
+        $(document).ready(function(){
+      
+      $("#network-update-btn").click(function(){
+              var network = $('#network').val();
+              var networkType = $('#networkType').val();
+            
+
+              if(network==""){
+        alert("Required Fields are Missing");
+       }
+       else{
+
+
+          $.ajax({
+                      url:"recharge.php",
+                      method : "POST",
+                      data:{
+                      network:network,
+                      networkType : networkType
+                      },
+                      success : function(data){
+                        //   $("#exportData").html(data);
+                        if(networkType=="0"){
+                          $("#mobNet-select").html(data);
+                        }
+                        else if(networkType=="1"){
+                        $("#dthNet-select").html(data);
+
+                        }
+                        else if(networkType=="2"){
+                        $("#other-select").html(data);
+
+                        }
+                      }
+                      
+
+                  })
+                  $("#network").val(empty);
+                
+  }
+
+      })
+    })
+
+
+    
+    $(document).ready(function(){
+        $("#hide-btn").click(function(){
+            $(".outputFields").hide();
+        })
+    })
+
+
+
+    // $(document).ready(function(){
+    //   $("#filter-btn").click(function(){
+    //    var fromDate = $("#fromDate").val();
+    //    var toDate = $("#toDate").val();
+    //    if(!fromDate=="" || !toDate==""){
+
+    //     $.ajax({
+    //       url : "display.php",
+    //       method : "POST",
+    //       data : {
+    //         fromDate : fromDate,
+    //         toDate : toDate
+    //       },
+    //       success : function(data){
+    //         var dataArr = data.split(".");
+    //                       $(".outputFields").show();
+    //                       $("#exportData").html(dataArr[0]);
+                         
+    //                       $('#exportData').DataTable({
+    //                     dom : 'Bfrtip',
+    //                     pagingType : "simple",
+    //                     destroy: true,
+    //                     buttons : [
+    //                       'pageLength','copy', 'csv','excel','pdf','print',
+    //                     ]
+    //                   });
+
+    //       }
+    //     })
+    //    }else{
+    //     alert("Required Fields are missing");
+    //    }
+
+        
+    //   })
+    // })
+
+
+ // MODAL CLOSE
+ $(document).ready(function(){
+      $(".close").click(function(){
+        $(".modal").hide();
+      })
+    })
+  
+
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+
+    
+  </script>
+  
+
+
+    <script src="app.js"></script>
+
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+</body>
+</html>

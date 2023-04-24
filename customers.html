@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRGPL | Customer Details</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="credits.css">
+    <link rel="stylesheet" href="logout.css">
+
+    <!-- EXCEL EXPORT LINK -->
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <!-- FONT AWESOME ICONS LINK -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- JQUERY LINK -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <link rel="icon" href="logo.png" sizes = 32x32 type="image/icon type">
+
+
+
+    
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.2/b-2.3.4/b-html5-2.3.4/b-print-2.3.4/datatables.min.js"></script>
+    <style>
+          img{
+        width:30px;
+      }
+      .del-img{
+        text-align: center;
+      }
+          :root {
+        --select-border: #777;
+        --select-focus: blue;
+        --select-arrow: var(--select-border);
+      }
+        .outputFields{
+            display: flex;
+            flex-direction: column;
+        }
+        table{
+            width: 100%;
+        }
+        table tr td button{
+            padding: 8px;
+        }
+        .inputFields{
+                  display: flex;
+                  flex-direction: row;
+                  margin: 10px;
+                  align-items: center;
+                  justify-content: space-between;
+              }
+              .inputFields input{
+                  height: 35px;
+                  outline: 0;
+                  width: 150px;
+                  border-width: 0 0 2px;
+        border-color: blue
+                  
+              }
+              .inputFields select {
+        width: 145px;
+        min-width: 15ch;
+        max-width: 30ch;
+        border: 1px solid var(--select-border);
+        border-radius: 0.25em;
+        padding: 8px;
+        cursor: pointer;
+        line-height: 1.1;
+        background-color: #fff;
+        background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+      }
+     
+      
+     .container {
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+              }
+    .update-modal {
+                background-color: #fefefe;
+                margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+                border: 1px solid #888;
+                width: 30%;
+              }
+              .logout{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     }
+     .logout img{
+      margin-right: 5px;
+     }
+     .logout img{
+  height: 25px;
+  width: 25px;
+}
+.dt-buttons{
+    display: flex;
+    flex-direction: row;
+}
+.dt-buttons button{
+    width: 80px;
+}
+
+#exportData tbody tr td button{
+margin: 0;
+padding: 8px;
+}
+#exportData { border-collapse: collapse; }
+#exportData th, #exportData td { border: solid 0.1px rgb(177, 172, 172); }
+
+
+#edit-modal{
+    margin: auto;
+    padding: 30px;
+    border: none;
+    width: 25%;
+}
+#edit-modal div{
+  display: flex;
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(4px);
+}
+.blur {
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
+      </style>
+</head>
+<body >
+    <!-- HEADER SECTION STARTS -->
+    <header>
+        <p>SRGPL</p>
+        <nav>
+            <ul>
+                <li><a href="recharge.html" class="link">Recharge</a></li>
+                <li><a href="dashboard.html" class="link">Sale</a></li>
+              <li><a href="withdraw.html" class="link">Withdraw</a></li>
+                <li><a href="expense.html" class="link">Expense</a></li>
+                <li><a href="purchase.html" class="link">Purchase</a></li>
+                <li><a href="service.html" class="link">Service</a></li>
+                <li><a href="credits.html" class="link">Credits</a></li>
+                <li><a href="stocks.html" class="link">Stocks</a></li>
+                <li><a href="orders.html" class="link">Orders</a></li>
+                <li><a href="daily.html" class="link">Daily</a></li>
+                <li><a href="customers.html" class="link">Customers</a></li>
+              <li><a href="return.html" class="link">Return</a></li>
+                <li><a href="overview.html" class="link">Overview</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- HEADER SECTION ENDS -->
+
+<!-- LIVE SEARCH SECTION STARTS -->
+    <section class="credits-container" style="width: 100%;">
+        <form class="example" style="margin:auto;max-width:300px">
+            <input type="text" id="live-search" placeholder="Search.." name="search2">
+<!-- UPDATE NEW CUSTOMER BUTTON STARTS -->
+            <button style="background-color: dodgerblue;" class="btn" id="myBtn"><i class="fa fa-user-plus"></i></button>
+<!-- UPDATE NEW CUSTOMER BUTTON ENDS -->
+          </form>
+    </section>
+<!-- LIVE SEARCH SECTION ENDS -->
+
+<!-- TABLE CONTAINER STARTS -->
+    <div class="outputFields">
+        <!-- <div class="availableData">
+            <strong>Available Data</strong>
+        </div> -->
+    <!-- CUSTOMER TABLE ENDS -->
+        <table id="exportData">          
+        </table>
+    <!-- CUSTOMER TABLE ENDS -->
+    <!-- EXPORT TO EXCEL BUTTON STARTS -->
+        <!-- <div class="exportbtn btn">
+            <button style="width: 100px;" onclick="ExportToExcel('xlsx')">EXPORT</button>
+        </div> -->
+    <!-- EXPORT TO EXCEL BUTTON ENDS -->
+    </div>
+
+<!-- TABLE CONTAINER ENDS -->
+
+
+<!-- MODAL FOR NEW CUSTOMER STARTS -->
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="customer-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="mobile">Mobile:</label>
+        <input type="text" id="mobile" name="mobile" required>
+        <label for="place">Place:</label>
+        <input type="text" id="place" name="place" required>
+        <label for="remarks">Remarks:</label>
+        <input type="text" id="remarks" name="remarks" required>
+        <input type="submit" id="customer-submit-btn" value="Submit">
+      </form>
+    </div>
+  </div>
+
+<!-- MODAL FOR NEW CUSTOMER ENDS -->
+
+  
+<!-- LOGOUT BUTTON STARTS -->
+  
+<div class="logout">
+    <div class="logItem">
+      <a href="profile.html"><img src="profile.png" alt=""></a>
+    </div>
+    <div class="logItem">
+      <img src="shutdown.png" alt="" onclick="document.getElementById('id02').style.display='block'">
+    </div>
+</div>
+<!-- LOGOUT BUTTON ENDS -->
+
+
+
+
+  <!-- COLLECTION UPDATE STARTS-->
+  <div id="id01" class="modal" style="animation:none; padding-top: 0;overflow: hidden;">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+    <form class="modal-content update-modal" action="">
+      <div class="container">
+       <form class="amount-update">
+        <input type="text" name="data-id" id="data-id" style="display: none;">
+      
+         <div class="inputFields">
+            <label for="remarks-update">Remarks</label>
+            <input type="text" name="remarks-update" id="remarks-update">
+        </div>    
+        <div class="inputFields">
+            <button type="submit" id="remarks-submit">SUBMIT </button>
+        </div>  
+       </form>
+        </div>
+      </div>
+    </form>
+  </div>    
+  <!-- COLLECTION UPDATE ENDS-->
+
+  <div id="id02" class="logModal">
+    <span onclick="document.getElementById('id02').style.display='none'" class="logClose" title="logClose logModal">×</span>
+    
+      <div class="logContainer">
+        <h1>Logout Account</h1>
+        <br>
+        <p>Are you sure you want to logout your account?</p>
+        <br>
+        <br>
+      
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+          <button type="button" onclick="logout()" class="deletebtn">Logout</button>
+
+        </div>
+      </div>
+  </div>
+
+
+  
+  <dialog id="edit-modal">
+    <input type="text" name="edit-id" id="edit-id" placeholder="Enter the ID">
+  
+    <div>
+      <button id="cancel-btn">CANCEL</button>
+      <button id="delete-btn">DELETE</button>
+    
+    </div>
+    </dialog>
+    
+    <script src="customer.js"></script>
+    <script src="app.js"></script>
+
+    <script type="text/javascript">
+const dialog = document.getElementById('edit-modal');
+
+window.onload = () =>{
+  var email = localStorage.getItem("srgpl");
+  if(email==null){
+   window.location.href="login.php";
+  }
+}
+  
+$("#delete-btn").click(function(){
+  var id = $("#edit-id").val();
+  var which = 4;
+  if(id!=""){
+    $.ajax({
+      url : "delete.php",
+      method : "POST",
+      data : {
+        id : id,
+        which : which
+      },
+      success : function(data){
+    dialog.close();
+        $('#'+id).remove();
+        $("#edit-id").val("");
+      }
+    })
+  }
+}) 
+
+$(window).click(function(){
+    if(event.target==dialog){
+    dialog.close();
+}
+})
+$("#cancel-btn").click(function(){
+  dialog.close();
+  
+})
+
+function logout(){
+  localStorage.clear();
+  location.href='logout.php';
+}
+
+
+document.querySelector(".customer-form").onsubmit = (e) =>{
+    e.preventDefault();
+}
+
+function collBtn(){
+    var buttons = document.querySelectorAll(".coll-btn");
+    buttons.forEach(btn =>{
+        btn.onclick = () =>{
+            var data_id = btn.dataset.id;
+            document.getElementById("id01").style.display = "block";
+            document.getElementById("data-id").value = data_id;
+            console.log(data_id);
+        }
+    })
+    
+    }
+    
+        
+// TO HIDE THE BALANCE UPDATE MODAL STARTS...
+        var modal2 = document.getElementById('id01'); 
+        window.onclick = function(event) {
+          if (event.target == modal2) {
+            modal2.style.display = "none";
+          }
+        }
+
+        document.querySelector(".update-modal").onsubmit = (e)=>{
+            e.preventDefault();
+        }
+// TO HIDE THE BALANCE UPDATE MODAL ENDS...
+$(document).ready(function(){
+    $.ajax({
+        url : 'customerdisplay.php',
+        method : "POST",
+        success : function(data){
+            $("#exportData").html(data);
+            collBtn();
+            $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                                                dialog.showModal();
+
+                    })
+                });
+            $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("customerdetails.html","_blank");
+                        })
+                    });
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+
+        }
+    })
+})
+
+
+$(document).ready(function(){
+    $("#remarks-submit").click(function(){
+        console.log("Hello");
+        var id = $("#data-id").val();
+        var remarks  = $("#remarks-update").val();
+        if(remarks!=""){
+            $("#id01").css("display","none");
+            $.ajax({
+                url : "customerdetailupdate.php",
+                method : "POST",
+                data : {
+                    id : id,
+                    remarks : remarks
+                },
+                success : function(data){
+                    console.log(data);   
+                    $('tr#'+id+' td.rem').text(data);
+                    $("#remarks-update").val(""); 
+                }
+            })
+        }
+    })
+})
+
+$(document).ready(function(){
+    $("#customer-submit-btn").click(function(){
+        var name = $("#name").val();
+        var place = $("#place").val();
+        var mobile = $("#mobile").val();
+        var remarks = $("#remarks").val();
+        if(name!="" && mobile!="" && place!=""){
+            $.ajax({
+                url : "customers.php",
+                method : "POST",
+                data : {
+                    name : name,
+                    mobile : mobile,
+                    place : place,
+                    remarks : remarks
+                },
+                success : function(data){
+                    if(data.length==28){
+                        alert(data);
+                    }
+                    else{
+                        console.log(data);
+
+                    $("#exportData").html(data);
+                    collBtn();
+                    $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                                                dialog.showModal();
+
+                    })
+                });
+                    $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("customerdetails.html","_blank");
+                        })
+                    });
+                    
+    //                 $('#exportData').DataTable({
+    //   dom : 'Bfrtip',
+    //   destroy : true,
+    //   buttons : [
+    //     'copy', 'csv','excel','pdf','print'
+    //   ]
+    // });
+
+   
+    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+                }
+                }
+            })
+        }
+    })
+})
+
+// FUNCTION TO UPDATE A BALANCE AMOUNT STARTS...
+
+        // $("#amount-submit").click(function(){
+        //     $("#id01").css("display","none");
+        //     var id = $("#data-id").val()
+        //     var amountType = $("#amount-type").val();
+        //     var amount =  $("#amount").val();
+        //     var remarks =  $("#remarks").val();
+        //         $.ajax({
+        //             url : "collectionupdate.php",
+        //             method : "POST",
+        //             data : {
+        //                 amountType : amountType,
+        //                 amount : amount,
+        //                 id : id,
+        //                 remarks : remarks
+        //             },
+        //             success : function(data){
+        //             // $("#exportData").html(data);
+        //             if(Number(data)<0){
+        //                 alert("Already Paid or Invalid amount");
+        //             }
+        //             else{
+        //                 $('tr#'+id+' td.balance').text(data);
+        //             }
+        //             $("#amount").val("");
+        //             $("#remarks").val("");
+        //             $("select").val(0);
+        //             console.log(data);
+        //             collBtn();
+        //             $(".history-btn").each(function(){
+        //                 // Test if the div element is empty
+        //                 $(this).click(function(){
+        //                     var dataID = $(this).attr('data-id');
+        //                     localStorage.setItem('dataID',dataID);
+        //                     window.open("customerhistory.html","_blank");
+        //                 })
+        //             });
+        //             }
+        //         })
+            
+        // })
+
+
+
+// FUNCTION TO UPDATE A BALANCE AMOUNT ENDS...
+
+
+
+
+// FUNCTION TO MAKE A LIVE SEARCH  STARTS...
+        $(document).ready(function(){
+            $("#live-search").keyup(function (){
+                var input = $(this).val();
+                // alert(input);
+                if(input != ""){
+                    $.ajax({
+                        url:"livecustomer.php",
+                        method : "POST",
+                        data:{input:input},
+                        success : function(data){
+                            $("#exportData").html(data);
+                            collBtn();
+                            $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                                                dialog.showModal();
+
+                    })
+                });
+                            $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("customerdetails.html","_blank");
+                        })
+                    });
+                        }
+
+                    })
+                    $(document).on('click', 'td', function(){  
+                $('#live-search').val($(this).attr('data-id')); 
+                if($('#live-search').val() != ""){
+                    $.ajax({
+                        url:"customerdisplay.php",
+                        method : "POST",
+                        success : function(data){
+                            $("#exportData").html(data);
+                            collBtn();
+                            $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                                                dialog.showModal();
+
+                    })
+                });
+                            $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("customerdetails.html","_blank");
+                        })
+                    });
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+                        }
+
+                    })
+           } 
+      });  
+                }
+                else{
+                    $.ajax({
+                        url:"customerdisplay.php",
+                        method : "POST",
+                        data:{input:input},
+                        success : function(data){
+                            $("#exportData").html(data);
+                            collBtn();
+                            $(".del-img").each(function(){
+                    // Test if the div element is empty
+                    $(this).click(function(){
+                                                dialog.showModal();
+
+                    })
+                });
+                            $(".history-btn").each(function(){
+                        // Test if the div element is empty
+                        $(this).click(function(){
+                            var dataID = $(this).attr('data-id');
+                            localStorage.setItem('dataID',dataID);
+                            window.open("customerdetails.html","_blank");
+                        })
+                    });
+                     
+                    $('#exportData').DataTable({
+                        dom : 'Bfrtip',
+                        pagingType : "simple",
+                        destroy: true,
+                        buttons : [
+                          'pageLength','copy', 'csv','excel','pdf','print',
+                        ]
+                      });
+                        }
+
+                    })
+                }
+            });
+        });
+// FUNCTION TO MAKE A LIVE SEARCH  ENDS...
+
+       
+   
+$(document).ready(function (){
+    var modal = $("#myModal");
+    $(window).click(function(){
+        if(event.target==modal){
+        modal.css("display", "none");
+    }
+    })
+  
+})
+
+// FUNCTION TO CLOSE THE NEW CUSTOMER MODAL WHEN THE CLOSE ICON IS CLICKED STARTS...
+
+$(document).ready(function (){
+    $(".close").click(function(){
+        $("#myModal").css("display", "none");
+    
+    })
+   
+})
+// FUNCTION TO CLOSE THE NEW CUSTOMER MODAL WHEN THE CLOSE ICON IS CLICKED ENDS...
+
+
+// FUNCTION TO EXPORT TABLES IN EXCEL FORMAT STARTS...
+
+    function ExportToExcel(type, fn, dl) {
+    var elt = document.getElementById('exportData');
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ?
+      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+      XLSX.writeFile(wb, fn || ('credits.' + (type || 'xlsx')));
+}
+// FUNCTION TO EXPORT TABLES IN EXCEL FORMAT ENDS...
+
+    </script>
+    
+<script src="balancepaid.js"></script>
+<script src="coll.js"></script>
+</body>
+</html>

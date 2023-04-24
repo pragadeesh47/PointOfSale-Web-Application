@@ -1,0 +1,232 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+header{
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  color: white;
+  position: relative;
+  background-color: dodgerblue;
+  width: 100%;
+}
+
+header p{
+  font-weight: bold;
+  width:10%;
+}
+header nav{
+width: 100%;
+}
+header nav ul li{
+  display: inline;
+  list-style-type: none;
+  margin-right: 10px;
+}
+header nav ul li a{
+  color: white;
+  text-decoration: none;
+  padding: 7px;
+}
+.active-link{
+  padding: 7px;
+  border: 1px solid white;
+  
+}
+
+input[type=search],
+input[type=text],input[type=date]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit], button {
+  width: 100%;
+  background-color: dodgerblue;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* input[type=submit]:hover {
+  background-color: #45a049;
+} */
+
+section{
+  display: flex;
+  width: 100%;
+
+}
+.dashboard-container div{
+  width: 50%;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+} 
+
+
+form{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+/* input[type=date]{
+  width: 50%;
+}
+.filter-class{
+  width: 75%;
+}
+.filter-class input[type=submit]{
+  width: 50%;
+} */
+
+ .show-button{
+  text-align: center;
+  width: 100%;
+}
+.show-button button{
+  width: 10%;
+} 
+
+
+
+/* CREDITS */
+
+/* .credits-container{
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.credits-container div{
+  width: 50%;
+}  */
+
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+.credits-container form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: green;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+} 
+
+
+.cashInHand{
+  width: 25%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+
+}
+#cash{
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+
+.logout{
+width: 25px;
+height: 25px;
+position: absolute;
+top: 17px;
+right: 17px;
+}
+.logout a{
+text-decoration: none;
+color: black;
+
+}
+.logout img{
+height: 25px;
+width: 25px;
+}
+
+
+.modal {
+display: none; /* Hidden by default */
+position: fixed; /* Stay in place */
+z-index: 1; /* Sit on top */
+padding-top: 50px; /* Location of the box */
+left: 0;
+top: 0;
+width: 100%; /* Full width */
+height: 100%; /* Full height */
+overflow: auto; /* Enable scroll if needed */
+background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+animation: scaleUp 0.5s ease;
+}
+
+@keyframes scaleUp {
+from{
+    padding-top: 0px;
+}
+to{
+    padding-top: 50px;
+}
+}
+
+/* Modal Content */
+.modal-content {
+background-color: #fefefe;
+margin: auto;
+padding: 20px;
+border: 1px solid #888;
+width: 50%;
+display: flex;
+flex-direction: column;
+}
+.modal-content form{
+display: flex;
+flex-direction: column;
+}
+/* The Close Button */
+.close {
+color: #aaaaaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: #000;
+text-decoration: none;
+cursor: pointer;
+}
+
+
+.logout{
+display: flex;
+align-items: center;
+}
+.logout a{
+margin-right: 5px;
+}
